@@ -758,7 +758,7 @@
       setBusy(true);
       const outgoing = [...history, { role: 'user', content: clean }].slice(-12);
       try {
-        const response = await fetch('https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev/chat', {
+        const response = await fetch('https://stress1-ai-api.dzhabbar123.workers.dev/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({ messages: outgoing }),
