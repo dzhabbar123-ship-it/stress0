@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="Образовательный проект о стрессе у подростков: причины, признаки, влияние на организм, профилактика и способы самопомощи.">
+  <title>Стресс у подростков — образовательный проект</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #edf3fb;
+      --text: #172238;
+      --muted: #64748b;
+      --primary: #3867d6;
+      --primary-dark: #244cae;
+      --accent: #24a58a;
+      --accent-soft: #e2f6f0;
+      --line: #e3e9f2;
+      --shadow: 0 18px 50px rgba(34, 57, 96, .08);
+      --radius: 22px;
+      --header: rgba(255,255,255,.88);
+      --danger: #d45d65;
+    }
+    body.dark {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --surface: #121d30;
+      --surface-2: #1a2940;
+      --text: #edf3ff;
+      --muted: #a6b4c9;
+      --primary: #83a9ff;
+      --primary-dark: #a8c2ff;
+      --accent: #62d4b7;
+      --accent-soft: #173d3a;
+      --line: #293951;
+      --shadow: 0 18px 50px rgba(0,0,0,.22);
+      --header: rgba(13, 23, 40, .9);
+      --danger: #ff9299;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Manrope", "Onest", sans-serif; line-height: 1.72;
+      transition: background .25s, color .25s;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .skip-link { position: absolute; left: -999px; top: 8px; z-index: 1000; background: var(--surface); padding: 10px 14px; border-radius: 10px; }
+    .skip-link:focus { left: 10px; }
+    .topbar {
+      position: sticky; top: 0; z-index: 100; background: var(--header);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--line);
+    }
+    .nav-wrap { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.04em; white-space: nowrap; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 13px; color: white; background: linear-gradient(145deg, #477ce8, #28b59a); box-shadow: 0 7px 18px rgba(56,103,214,.22); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 9px 11px; border-radius: 10px; color: var(--muted); font-size: 13px; font-weight: 700; text-decoration: none; transition: .2s; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary); background: var(--surface-2); outline: none; }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .icon-btn, .menu-btn { width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); color: var(--text); }
+    .menu-btn { display: none; }
+    .hero {
+      position: relative; overflow: hidden; padding: 86px 0 76px;
+      background: radial-gradient(circle at 80% 20%, rgba(88,148,255,.20), transparent 28%),
+                  radial-gradient(circle at 15% 85%, rgba(36,165,138,.15), transparent 26%),
+                  var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 55px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+    .eyebrow:before { content: ""; width: 24px; height: 2px; background: var(--accent); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin: 18px 0; max-width: 720px; font-family: "Onest", sans-serif; font-size: clamp(38px, 5.4vw, 66px); line-height: 1.08; letter-spacing: -.055em; }
+    .gradient-text { color: var(--primary); }
+    .hero-copy { max-width: 650px; color: var(--muted); font-size: 17px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 19px; border: 1px solid transparent; border-radius: 14px; font-weight: 800; text-decoration: none; transition: transform .2s, box-shadow .2s, background .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: white; background: var(--primary); box-shadow: 0 10px 22px rgba(56,103,214,.22); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { color: var(--text); background: var(--surface); border-color: var(--line); }
+    .hero-visual { position: relative; min-height: 360px; display: grid; place-items: center; }
+    .orbit { position: absolute; width: min(330px, 80vw); aspect-ratio: 1; border: 1px dashed rgba(56,103,214,.35); border-radius: 50%; }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border: 1px solid rgba(36,165,138,.24); border-radius: 50%; inset: 28px; }
+    .orbit:after { inset: 62px; }
+    .mind-card { position: relative; z-index: 2; width: min(270px, 75vw); padding: 30px; text-align: center; border: 1px solid var(--line); border-radius: 28px; background: var(--surface); box-shadow: var(--shadow); }
+    .mind-icon { width: 86px; height: 86px; display: grid; place-items: center; margin: 0 auto 16px; border-radius: 28px; font-size: 42px; background: var(--accent-soft); }
+    .mind-card strong { display: block; font-size: 20px; }
+    .mind-card span { color: var(--muted); font-size: 13px; }
+    .float-chip { position: absolute; z-index: 3; padding: 10px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); font-size: 13px; font-weight: 800; }
+    .chip-one { top: 36px; right: 0; } .chip-two { bottom: 32px; left: 0; }
+    .section { padding: 78px 0; }
+    .section-alt { background: var(--surface-2); }
+    .section-head { max-width: 720px; margin-bottom: 32px; }
+    .section-head h2 { margin: 10px 0 12px; font-family: "Onest", sans-serif; font-size: clamp(29px, 3.5vw, 42px); line-height: 1.2; letter-spacing: -.04em; }
+    .section-head p { color: var(--muted); margin-bottom: 0; }
+    .kicker { color: var(--accent); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+    .lead { color: var(--muted); font-size: 17px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+    .panel, .info-card, .stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .panel { padding: 28px; }
+    .info-card { padding: 23px; transition: transform .2s, border-color .2s; }
+    .info-card:hover { transform: translateY(-4px); border-color: rgba(56,103,214,.4); }
+    .card-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 16px; border-radius: 15px; background: var(--surface-2); font-size: 23px; }
+    .info-card h3 { margin-bottom: 8px; font-size: 17px; letter-spacing: -.02em; }
+    .info-card p, .panel p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .callout { display: flex; gap: 15px; padding: 20px 22px; border: 1px solid rgba(36,165,138,.25); border-radius: 18px; background: var(--accent-soft); }
+    .callout-icon { font-size: 24px; }
+    .callout p { margin: 0; color: var(--text); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 22px; }
+    .step { position: relative; padding: 22px; border-radius: 18px; background: var(--surface-2); }
+    .step-number { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-bottom: 12px; border-radius: 11px; background: var(--primary); color: white; font-weight: 800; }
+    .step h3 { margin-bottom: 7px; font-size: 16px; }
+    .step p { margin: 0; color: var(--muted); font-size: 13px; }
+    .stat-card { padding: 22px; }
+    .stat-value { display: block; color: var(--primary); font-size: 35px; line-height: 1.15; font-weight: 800; letter-spacing: -.05em; }
+    .stat-label { display: block; margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .chart-wrap { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 35px; }
+    .bar-chart { display: grid; gap: 17px; }
+    .bar-row { display: grid; grid-template-columns: 105px 1fr 48px; gap: 12px; align-items: center; font-size: 13px; font-weight: 700; }
+    .bar-track { height: 13px; overflow: hidden; border-radius: 99px; background: var(--surface-2); }
+    .bar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+    .chart-note { color: var(--muted); font-size: 12px; }
+    .accordion { display: grid; gap: 12px; }
+    .accordion-item { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+    .accordion-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 20px; border: 0; background: transparent; color: var(--text); text-align: left; font-weight: 800; }
+    .accordion-trigger span:last-child { color: var(--primary); font-size: 22px; transition: transform .2s; }
+    .accordion-content { display: none; padding: 0 20px 20px; color: var(--muted); font-size: 14px; }
+    .accordion-item.open .accordion-content { display: block; }
+    .accordion-item.open .accordion-trigger span:last-child { transform: rotate(45deg); }
+    .accordion-content p:last-child { margin-bottom: 0; }
+    .two-column-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .list-item { display: flex; align-items: flex-start; gap: 12px; padding: 15px; border-radius: 15px; background: var(--surface-2); }
+    .list-item b { display: block; font-size: 14px; }
+    .list-item small { display: block; color: var(--muted); font-size: 12px; }
+    .check { color: var(--accent); font-weight: 900; }
+    .routine { display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .routine:last-child { border: 0; }
+    .routine time { color: var(--primary); font-weight: 800; }
+    .routine p { margin: 0; color: var(--muted); font-size: 14px; }
+    .quiz-box { max-width: 760px; margin: 0 auto; padding: clamp(22px, 4vw, 38px); border: 1px solid var(--line); border-radius: 26px; background: var(--surface); box-shadow: var(--shadow); }
+    .quiz-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .progress { height: 8px; margin: 12px 0 26px; overflow: hidden; border-radius: 99px; background: var(--surface-2); }
+    .progress-bar { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width .25s; }
+    .question { min-height: 72px; margin-bottom: 20px; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.35; }
+    .answers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .answer-btn { min-height: 52px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface-2); color: var(--text); font-weight: 800; transition: .2s; }
+    .answer-btn:hover, .answer-btn:focus-visible { border-color: var(--primary); color: var(--primary); outline: none; }
+    .quiz-result { display: none; padding: 22px; border-radius: 18px; background: var(--surface-2); }
+    .quiz-result h3 { margin-bottom: 8px; }
+    .quiz-result p { color: var(--muted); }
+    .quiz-result small { color: var(--muted); }
+    .quiz-controls { display: flex; justify-content: center; margin-top: 18px; }
+    .sources { display: grid; gap: 12px; padding-left: 20px; color: var(--muted); font-size: 13px; }
+    .sources a { color: var(--primary); overflow-wrap: anywhere; }
+    .footer { padding: 35px 0; background: #111d31; color: #dbe6f7; }
+    .footer-grid { display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+    .footer p { margin: 5px 0 0; color: #9fb0c8; font-size: 12px; }
+    .back-top { position: fixed; right: 22px; bottom: 22px; z-index: 50; width: 48px; height: 48px; border: 0; border-radius: 15px; background: var(--primary); color: white; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transform: translateY(10px); transition: .2s; }
+    .back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s, transform .55s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    :focus-visible { outline: 3px solid rgba(56,103,214,.35); outline-offset: 3px; }
+    @media (max-width: 900px) {
+      .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 12px 20px 18px; flex-direction: column; align-items: stretch; background: var(--header); border-bottom: 1px solid var(--line); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 11px 14px; }
+      .menu-btn { display: inline-grid; place-items: center; }
+      .hero-grid { grid-template-columns: 1fr; gap: 25px; }
+      .hero-visual { min-height: 300px; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 650px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .hero { padding: 62px 0 45px; }
+      .hero-copy { font-size: 15px; }
+      .hero-visual { min-height: 260px; }
+      .section { padding: 55px 0; }
+      .grid-2, .grid-3, .chart-wrap, .steps, .two-column-list { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .panel { padding: 21px; }
+      .answers { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 88px 1fr 42px; gap: 8px; }
+      .footer-grid { align-items: flex-start; flex-direction: column; }
+      .routine { grid-template-columns: 75px 1fr; }
+      .chip-one { right: -3px; top: 15px; } .chip-two { left: -3px; bottom: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+  <div class="topbar">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="На главную">
+        <span class="brand-mark">↗</span><span>Психология подростка</span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Основная навигация">
+        <a href="#about">О стрессе</a><a href="#science">Как работает</a><a href="#causes">Причины</a>
+        <a href="#signs">Признаки</a><a href="#effects">Последствия</a><a href="#prevention">Профилактика</a><a href="#quiz">Тест</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Переключить цветовую тему" title="Переключить тему">☾</button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Образовательный научный проект</span>
+        <h1>Стресс у подростков: <span class="gradient-text">понять, распознать, справиться</span></h1>
+        <p class="hero-copy">Информационный сайт о том, почему возникает стресс в подростковом возрасте, как он влияет на самочувствие и какие ежедневные действия помогают сохранять эмоциональное равновесие.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#about">Изучить тему <span aria-hidden="true">→</span></a>
+          <a class="btn btn-secondary" href="#quiz">Пройти тест <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Иллюстрация эмоционального равновесия">
+        <div class="orbit"></div>
+        <div class="mind-card">
+          <div class="mind-icon">🧠</div>
+          <strong>Забота о себе</strong>
+          <span>это навык, который можно развивать</span>
+        </div>
+        <div class="float-chip chip-one">🌿 Спокойствие</div>
+        <div class="float-chip chip-two">💬 Поддержка важна</div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">01 / Понимание</span>
+          <h2>Что такое стресс?</h2>
+          <p>Стресс — естественная реакция организма на требования, перемены или ситуации, которые человек воспринимает как сложные.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel reveal">
+            <h3>Стресс не всегда вреден</h3>
+            <p>Кратковременное напряжение может мобилизовать внимание и энергию: например, помочь собраться перед выступлением или контрольной. Проблемы чаще возникают, когда нагрузка слишком сильная, повторяется часто или человек долго не успевает восстановиться.</p>
+          </div>
+          <div class="panel reveal">
+            <h3>Почему подростковый возраст особенный?</h3>
+            <p>В этот период одновременно происходят физические, эмоциональные и социальные изменения. Подросток формирует самостоятельность, отношения со сверстниками и представление о себе, а учебные и семейные ожидания могут усиливать напряжение.</p>
+          </div>
+        </div>
+        <div class="callout reveal" style="margin-top:20px">
+          <span class="callout-icon">💡</span>
+          <p><b>Главная мысль:</b> испытывать стресс — не слабость и не повод стыдиться. Важно замечать своё состояние, давать себе время на восстановление и обращаться за поддержкой, если справляться становится трудно.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="science">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">02 / Научная основа</span>
+          <h2>Как организм реагирует на стресс</h2>
+          <p>При ощущении угрозы мозг запускает цепочку физиологических реакций. Это помогает быстро действовать, но требует энергии.</p>
+        </div>
+        <div class="grid-3">
+          <article class="info-card reveal"><div class="card-icon">⚡</div><h3>Адреналин</h3><p>Может учащать сердцебиение и дыхание, повышать готовность мышц к действию. Поэтому в напряжённый момент человек ощущает прилив энергии.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🔄</div><h3>Кортизол</h3><p>Участвует в регулировании обмена веществ и энергетических ресурсов. При длительном напряжении режим восстановления может нарушаться.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🧩</div><h3>Мозг и внимание</h3><p>Сильное волнение может затруднять концентрацию, планирование и извлечение информации из памяти — особенно если человек устал или не выспался.</p></article>
+        </div>
+        <div class="panel reveal" style="margin-top:20px">
+          <h3>Три стадии стрессовой реакции по модели Ганса Селье</h3>
+          <div class="steps">
+            <div class="step"><span class="step-number">1</span><h3>Тревога</h3><p>Организм замечает воздействие стрессора и мобилизует ресурсы для реакции.</p></div>
+            <div class="step"><span class="step-number">2</span><h3>Сопротивление</h3><p>Организм старается приспособиться и поддерживать активность, пока воздействие продолжается.</p></div>
+            <div class="step"><span class="step-number">3</span><h3>Истощение</h3><p>Если нагрузка длительная и восстановления недостаточно, ресурсы могут снижаться, а усталость накапливаться.</p></div>
+          </div>
+          <p class="chart-note" style="margin-top:16px">Это упрощённая учебная модель общей адаптационной реакции. Реальные реакции людей могут отличаться; стадии не обязательно проявляются строго последовательно.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="causes">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">03 / Источники напряжения</span>
+          <h2>Основные причины стресса у подростков</h2>
+          <p>Один и тот же фактор разные люди воспринимают по-разному. Часто стресс усиливается, когда несколько причин действуют одновременно.</p>
+        </div>
+        <div class="grid-3">
+          <article class="info-card reveal"><div class="card-icon">📚</div><h3>Учёба и экзамены</h3><p>Большой объём заданий, контрольные, страх ошибки, высокие ожидания и нехватка времени на отдых.</p></article>
+          <article class="info-card reveal"><div class="card-icon">👥</div><h3>Отношения со сверстниками</h3><p>Конфликты, травля, чувство одиночества, желание соответствовать ожиданиям группы.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🏠</div><h3>Семейная обстановка</h3><p>Частые ссоры, недостаток общения, чрезмерное давление или ощущение, что тебя не слышат.</p></article>
+          <article class="info-card reveal"><div class="card-icon">📱</div><h3>Социальные сети</h3><p>Сравнение себя с другими, негативные комментарии, постоянные уведомления и страх что-то пропустить.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🌙</div><h3>Недостаток сна</h3><p>Позднее засыпание и нерегулярный режим могут снижать устойчивость к повседневным трудностям.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🧭</div><h3>Перемены и неопределённость</h3><p>Переход в новую школу, выбор будущей профессии, изменения внешности и поиск своего места.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="signs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">04 / Самонаблюдение</span>
+          <h2>Как распознать стресс</h2>
+          <p>Стресс может проявляться не только волнением. Иногда первыми становятся заметны изменения сна, поведения или физического самочувствия.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel reveal">
+            <h3>Эмоциональные и поведенческие признаки</h3>
+            <div class="two-column-list">
+              <div class="list-item"><span>😟</span><div><b>Тревога</b><small>Частое беспокойство, напряжение</small></div></div>
+              <div class="list-item"><span>😠</span><div><b>Раздражительность</b><small>Резкие реакции, вспыльчивость</small></div></div>
+              <div class="list-item"><span>🙁</span><div><b>Снижение настроения</b><small>Потеря интереса, грусть</small></div></div>
+              <div class="list-item"><span>🚪</span><div><b>Замкнутость</b><small>Желание избегать общения</small></div></div>
+            </div>
+          </div>
+          <div class="panel reveal">
+            <h3>Физические и когнитивные признаки</h3>
+            <div class="two-column-list">
+              <div class="list-item"><span>💤</span><div><b>Нарушение сна</b><small>Трудно уснуть или проснуться</small></div></div>
+              <div class="list-item"><span>🤕</span><div><b>Недомогание</b><small>Головная боль, напряжение мышц</small></div></div>
+              <div class="list-item"><span>🧠</span><div><b>Сложности с вниманием</b><small>Труднее сосредоточиться</small></div></div>
+              <div class="list-item"><span>🔋</span><div><b>Усталость</b><small>Недостаток сил даже после отдыха</small></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="callout reveal" style="margin-top:20px">
+          <span class="callout-icon">ℹ️</span>
+          <p>Отдельный признак сам по себе не доказывает наличие хронического стресса. Если изменения сохраняются, усиливаются или мешают учёбе и повседневной жизни, стоит поговорить со взрослым, которому доверяешь, школьным психологом или медицинским специалистом.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="effects">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">05 / Возможные последствия</span>
+          <h2>Как длительный стресс влияет на подростка</h2>
+          <p>Если напряжение долго остаётся без достаточного восстановления и поддержки, оно может затрагивать разные стороны жизни.</p>
+        </div>
+        <div class="grid-4">
+          <article class="info-card reveal"><div class="card-icon">🛌</div><h3>Сон и энергия</h3><p>Сложности с засыпанием, утомляемость, ощущение постоянной перегрузки.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🎯</div><h3>Учёба</h3><p>Снижение концентрации, трудности с запоминанием и выполнением задач.</p></article>
+          <article class="info-card reveal"><div class="card-icon">💬</div><h3>Общение</h3><p>Повышенная конфликтность, избегание контактов или чувство изоляции.</p></article>
+          <article class="info-card reveal"><div class="card-icon">❤️</div><h3>Самочувствие</h3><p>Головные боли, мышечное напряжение и другие жалобы, которые требуют внимания.</p></article>
+        </div>
+        <p class="chart-note" style="margin-top:17px">Последствия зависят от длительности и интенсивности стресса, индивидуальных особенностей и доступной поддержки. Стресс не означает, что у человека обязательно возникнет заболевание.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="research">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">06 / Практическая часть проекта</span>
+          <h2>Результаты опроса участников</h2>
+          <p>В исследовании приняли участие 32 человека. По предоставленным результатам распределение уровней стресса выглядит следующим образом.</p>
+        </div>
+        <div class="chart-wrap">
+          <div class="panel reveal">
+            <div class="bar-chart" role="img" aria-label="Распределение: низкий уровень 22 процента, средний 53 процента, высокий 25 процентов">
+              <div class="bar-row"><span>Низкий</span><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><b>22%</b></div>
+              <div class="bar-row"><span>Средний</span><div class="bar-track"><div class="bar-fill" style="width:53%"></div></div><b>53%</b></div>
+              <div class="bar-row"><span>Высокий</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><b>25%</b></div>
+            </div>
+            <p class="chart-note" style="margin-top:20px">Доли приведены в процентах и в сумме составляют 100%.</p>
+          </div>
+          <div class="reveal">
+            <div class="grid-2">
+              <div class="stat-card"><span class="stat-value">32</span><span class="stat-label">участника опроса</span></div>
+              <div class="stat-card"><span class="stat-value">53%</span><span class="stat-label">средний уровень стресса</span></div>
+              <div class="stat-card"><span class="stat-value">25%</span><span class="stat-label">высокий уровень</span></div>
+              <div class="stat-card"><span class="stat-value">22%</span><span class="stat-label">низкий уровень</span></div>
+            </div>
+            <p class="lead" style="margin-top:18px">Полученные данные показывают, что стресс встречается среди опрошенных подростков. Поэтому важно уделять внимание профилактике, режиму отдыха и доступности психологической поддержки.</p>
+          </div>
+        </div>
+        <p class="chart-note" style="margin-top:18px">Результаты относятся только к данной группе участников и не являются статистикой всех подростков. Проценты округлены; методика и условия опроса должны учитываться при интерпретации.</p>
+      </div>
+    </section>
+
+    <section class="section" id="prevention">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">07 / Профилактика</span>
+          <h2>Что помогает снизить напряжение</h2>
+          <p>Не существует одного способа, который подходит всем. Лучше постепенно подобрать несколько привычек, которые реально вписываются в повседневную жизнь.</p>
+        </div>
+        <div class="grid-3">
+          <article class="info-card reveal"><div class="card-icon">🌬️</div><h3>Спокойное дыхание</h3><p>Сделай комфортный вдох и чуть более медленный выдох. Повтори несколько раз без задержки дыхания и усилия.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🚶</div><h3>Движение и прогулки</h3><p>Прогулка, танцы, велосипед или любимый спорт помогают переключиться и поддерживают общее самочувствие.</p></article>
+          <article class="info-card reveal"><div class="card-icon">😴</div><h3>Регулярный сон</h3><p>Старайся придерживаться стабильного времени отхода ко сну и уменьшать использование экрана перед сном.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🗓️</div><h3>Планирование</h3><p>Разделяй большие задачи на небольшие шаги, выбирай приоритеты и оставляй время на перерывы.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🎧</div><h3>Отдых и увлечения</h3><p>Музыка, творчество, чтение и другие приятные занятия помогают восстановить силы.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🤝</div><h3>Поддержка близких</h3><p>Разговор с другом или взрослым, которому доверяешь, помогает не оставаться с проблемой в одиночестве.</p></article>
+          <article class="info-card reveal"><div class="card-icon">📵</div><h3>Цифровые границы</h3><p>Отключай ненужные уведомления, делай перерывы от ленты и не сравнивай свою жизнь с чужими публикациями.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🥗</div><h3>Питание и вода</h3><p>Регулярное питание и достаточное количество воды поддерживают организм в течение дня.</p></article>
+          <article class="info-card reveal"><div class="card-icon">🧘</div><h3>Расслабление</h3><p>Растяжка, спокойная музыка, рисование или короткая практика осознанности могут помочь переключиться.</p></article>
+        </div>
+        <div class="panel reveal" style="margin-top:22px">
+          <h3>Пример сбалансированного дня</h3>
+          <div class="routine"><time>Утро</time><p>Спокойно проснуться, позавтракать и определить 1–3 главные задачи на день.</p></div>
+          <div class="routine"><time>День</time><p>Чередовать учёбу с короткими перерывами, двигаться и по возможности выходить на свежий воздух.</p></div>
+          <div class="routine"><time>Вечер</time><p>Закончить основные дела, уделить время близким или увлечению, подготовиться ко сну.</p></div>
+          <div class="routine"><time>Перед сном</time><p>Убрать телефон подальше, приглушить свет и выбрать спокойное занятие.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="help">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">08 / Поддержка</span>
+          <h2>Когда стоит обратиться за помощью</h2>
+          <p>Просить о помощи — нормальный и ответственный шаг. Не нужно ждать, пока станет совсем тяжело.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel reveal">
+            <h3>Обратись к взрослому или специалисту, если:</h3>
+            <div class="accordion">
+              <div class="accordion-item open"><button class="accordion-trigger" type="button" aria-expanded="true"><span>Тревога или подавленность не проходят</span><span>＋</span></button><div class="accordion-content"><p>Состояние сохраняется длительное время, повторяется часто или становится сильнее.</p></div></div>
+              <div class="accordion-item"><button class="accordion-trigger" type="button" aria-expanded="false"><span>Стало трудно учиться и общаться</span><span>＋</span></button><div class="accordion-content"><p>Переживания мешают повседневным делам, отношениям, сну или обычной активности.</p></div></div>
+              <div class="accordion-item"><button class="accordion-trigger" type="button" aria-expanded="false"><span>Самостоятельные способы не помогают</span><span>＋</span></button><div class="accordion-content"><p>Ты пробовал отдыхать и менять привычки, но всё равно чувствуешь, что не справляешься.</p></div></div>
+            </div>
+          </div>
+          <div class="panel reveal">
+            <h3>К кому можно обратиться</h3>
+            <div class="list-item"><span>👨‍👩‍👧</span><div><b>Родители или близкие</b><small>Начни разговор с человеком, которому доверяешь.</small></div></div>
+            <div class="list-item" style="margin-top:10px"><span>🏫</span><div><b>Школьный психолог или педагог</b><small>Можно попросить о конфиденциальной беседе и поддержке.</small></div></div>
+            <div class="list-item" style="margin-top:10px"><span>🩺</span><div><b>Врач или психолог</b><small>Специалист поможет разобраться в причинах и подобрать подходящую помощь.</small></div></div>
+            <p class="chart-note" style="margin-top:16px">Если есть непосредственная опасность для жизни или здоровья, нужно сразу обратиться к взрослому рядом и в местную экстренную службу.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <div class="container">
+        <div class="section-head reveal" style="margin-inline:auto;text-align:center">
+          <span class="kicker">09 / Интерактив</span>
+          <h2>Небольшая проверка самочувствия</h2>
+          <p>Ответь на вопросы о том, как ты чувствовал себя в последнее время. Это не медицинская диагностика, а повод внимательнее отнестись к своему состоянию.</p>
+        </div>
+        <div class="quiz-box reveal">
+          <div id="quizContent">
+            <div class="quiz-meta"><span id="questionCounter">Вопрос 1 из 10</span><span id="percent">10%</span></div>
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+            <div class="question" id="questionText" aria-live="polite"></div>
+            <div class="answers" id="answers"></div>
+          </div>
+          <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+          <div class="quiz-controls"><button class="btn btn-secondary" id="restartQuiz" type="button" style="display:none">Пройти ещё раз</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="conclusion">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">10 / Итоги</span>
+          <h2>Главное, что важно запомнить</h2>
+        </div>
+        <div class="panel reveal">
+          <p class="lead">Стресс является частью жизни, в том числе подростковой. Он может возникать из-за учёбы, общения, семейных обстоятельств и внутренних переживаний. Кратковременное напряжение иногда помогает собраться, однако длительный стресс без восстановления способен отрицательно влиять на сон, настроение, внимание и самочувствие.</p>
+          <p class="lead">Профилактика начинается с простых действий: полноценного отдыха, физической активности, разумного планирования, ограничения цифровой перегрузки и общения с людьми, которым можно доверять. Если стресс становится постоянным или мешает жить, важно обратиться за поддержкой.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Материалы для изучения</span>
+          <h2>Полезные источники</h2>
+          <p>Ниже приведены авторитетные материалы, где можно подробнее прочитать о психическом здоровье подростков и управлении стрессом.</p>
+        </div>
+        <ol class="sources reveal">
+          <li>Всемирная организация здравоохранения. <a href="https://www.who.int/health-topics/adolescent-health" target="_blank" rel="noopener noreferrer">Adolescent health — здоровье подростков</a>.</li>
+          <li>Всемирная организация здравоохранения. <a href="https://www.who.int/news-room/fact-sheets/detail/adolescent-mental-health" target="_blank" rel="noopener noreferrer">Adolescent mental health — психическое здоровье подростков</a>.</li>
+          <li>Национальная служба здравоохранения Великобритании (NHS). <a href="https://www.nhs.uk/mental-health/children-and-young-adults/" target="_blank" rel="noopener noreferrer">Mental health for children and young adults</a>.</li>
+          <li>MedlinePlus. <a href="https://medlineplus.gov/ency/article/003211.htm" target="_blank" rel="noopener noreferrer">Stress and your health</a>.</li>
+        </ol>
+        <p class="chart-note reveal">Информация на сайте носит образовательный характер и не заменяет консультацию врача или психолога.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><strong>Стресс у подростков</strong><p>Образовательный индивидуальный проект</p></div>
+      <div><strong>Автор и разработчик: Азизов Джаббар</strong><p>© <span id="year"></span> Все права на материалы проекта.</p></div>
+    </div>
+  </footer>
+  <button class="back-top" id="backTop" type="button" aria-label="Вернуться наверх">↑</button>
+
+  <script>
+    // Цветовая тема с сохранением выбора
+    const themeBtn = document.getElementById('themeBtn');
+    const savedTheme = localStorage.getItem('stress-site-theme');
+    if (savedTheme === 'dark') document.body.classList.add('dark');
+    function updateThemeButton() {
+      const dark = document.body.classList.contains('dark');
+      themeBtn.textContent = dark ? '☀' : '☾';
+      themeBtn.setAttribute('aria-label', dark ? 'Включить светлую тему' : 'Включить тёмную тему');
+    }
+    updateThemeButton();
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('stress-site-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+      updateThemeButton();
+    });
+
+    // Мобильная навигация
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.textContent = open ? '✕' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = '☰';
+    }));
+
+    // Аккордеоны: открывается один блок в пределах группы
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.accordion-item');
+        const group = item.parentElement;
+        group.querySelectorAll('.accordion-item').forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.accordion-trigger')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        const isOpen = item.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+
+    // Плавное появление блоков при прокрутке
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Кнопка возврата наверх
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 500), { passive: true });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Учебный опрос. Баллы: «часто» — 2, «иногда» — 1, «нет» — 0.
+    // Результат не является диагнозом и не заменяет профессиональную оценку.
+    const questions = [
+      'За последние две недели ты часто чувствовал(а) усталость даже после отдыха?',
+      'Тебе было трудно заснуть или сон часто прерывался?',
+      'Бывало сложно сосредоточиться на уроках или домашних заданиях?',
+      'Ты часто переживал(а) из-за событий, которые ещё не произошли?',
+      'Ты замечал(а), что стал(а) быстрее раздражаться?',
+      'Учебная нагрузка или ожидания окружающих казались чрезмерными?',
+      'Тебе не хватало времени на отдых и любимые занятия?',
+      'Ты часто продолжал(а) пользоваться телефоном, хотя уже хотел(а) спать?',
+      'На фоне волнения у тебя возникали головная боль или мышечное напряжение?',
+      'Ты чувствовал(а), что напряжение мешает обычным делам?'
+    ];
+    const answerOptions = [
+      { label: 'Часто', value: 2 },
+      { label: 'Иногда', value: 1 },
+      { label: 'Почти никогда', value: 0 }
+    ];
+    let questionIndex = 0;
+    let totalScore = 0;
+    const questionText = document.getElementById('questionText');
+    const answers = document.getElementById('answers');
+    const progressBar = document.getElementById('progressBar');
+    const questionCounter = document.getElementById('questionCounter');
+    const percent = document.getElementById('percent');
+    const quizContent = document.getElementById('quizContent');
+    const quizResult = document.getElementById('quizResult');
+    const restartQuiz = document.getElementById('restartQuiz');
+
+    function renderQuestion() {
+      const progress = Math.round((questionIndex / questions.length) * 100);
+      questionCounter.textContent = `Вопрос ${questionIndex + 1} из ${questions.length}`;
+      percent.textContent = `${Math.round(((questionIndex + 1) / questions.length) * 100)}%`;
+      progressBar.style.width = `${progress}%`;
+      questionText.textContent = questions[questionIndex];
+      answers.replaceChildren();
+      answerOptions.forEach(option => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'answer-btn';
+        button.textContent = option.label;
+        button.addEventListener('click', () => {
+          totalScore += option.value;
+          questionIndex += 1;
+          if (questionIndex < questions.length) renderQuestion();
+          else showResult();
+        });
+        answers.appendChild(button);
+      });
+    }
+    function showResult() {
+      quizContent.style.display = 'none';
+      progressBar.style.width = '100%';
+      const maxScore = questions.length * 2;
+      let heading, message;
+      if (totalScore >= 14) {
+        heading = 'Похоже, напряжения сейчас много';
+        message = 'Попробуй снизить нагрузку там, где это возможно, восстановить режим сна и поговорить с человеком, которому доверяешь. Если такое состояние сохраняется или мешает повседневной жизни, обратись к школьному психологу или специалисту.';
+      } else if (totalScore >= 7) {
+        heading = 'Есть признаки умеренного напряжения';
+        message = 'Обрати внимание на отдых, сон и баланс учёбы с личным временем. Подумай, какие ситуации отнимают больше всего сил, и обсуди их с близким человеком.';
+      } else {
+        heading = 'По ответам выраженных признаков напряжения немного';
+        message = 'Продолжай поддерживать привычки, которые помогают тебе восстанавливаться. Даже при хорошем самочувствии полезно следить за отдыхом и своим эмоциональным состоянием.';
+      }
+      quizResult.style.display = 'block';
+      quizResult.innerHTML = `<h3>${heading}</h3><p>${message}</p><small>Учебный ориентир: ${totalScore} из ${maxScore} баллов. Это не диагноз и не стандартизированный психологический тест. Если тебя что-то беспокоит, поговори со взрослым или специалистом независимо от результата.</small>`;
+      restartQuiz.style.display = 'inline-flex';
+    }
+    function resetQuiz() {
+      questionIndex = 0;
+      totalScore = 0;
+      quizResult.style.display = 'none';
+      quizContent.style.display = 'block';
+      restartQuiz.style.display = 'none';
+      renderQuestion();
+    }
+    restartQuiz.addEventListener('click', resetQuiz);
+    renderQuestion();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Бесплатный справочник СтрессНавигатор: кнопка и окно -->
+  <style>
+    .ai-launcher{position:fixed;right:24px;bottom:86px;z-index:120;width:62px;height:62px;border:0;border-radius:21px;background:linear-gradient(145deg,#3867d6,#24a58a);color:#fff;box-shadow:0 12px 32px rgba(37,83,170,.34);font-size:27px;display:grid;place-items:center;transition:transform .2s,box-shadow .2s}
+    .ai-launcher:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(37,83,170,.4)}
+    .ai-launcher .ai-dot{position:absolute;right:5px;top:5px;width:11px;height:11px;border:2px solid #fff;border-radius:50%;background:#53dfad}
+    .ai-panel{position:fixed;right:24px;bottom:160px;z-index:121;width:min(390px,calc(100vw - 28px));height:min(590px,calc(100dvh - 190px));min-height:390px;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 24px 70px rgba(8,25,54,.24);color:var(--text)}
+    .ai-panel.ai-open{display:flex;animation:aiPop .2s ease-out}
+    @keyframes aiPop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .ai-head{display:flex;align-items:center;gap:11px;padding:15px 16px;background:linear-gradient(115deg,#17345c,#245d75);color:#fff}
+    .ai-avatar{width:40px;height:40px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.15);font-size:22px}
+    .ai-head-copy{flex:1;min-width:0}.ai-head-copy strong{display:block;font-size:14px}.ai-head-copy small{display:block;color:#c4d9ed;font-size:11px;margin-top:2px}
+    .ai-close{width:34px;height:34px;border:0;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:20px}
+    .ai-notice{padding:9px 14px;background:var(--surface-2);color:var(--muted);font-size:10px;line-height:1.45;border-bottom:1px solid var(--line)}
+    .ai-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px;scroll-behavior:smooth}
+    .ai-message{max-width:88%;padding:11px 13px;border-radius:16px;font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+    .ai-message.bot{align-self:flex-start;background:var(--surface-2);border-bottom-left-radius:5px;color:var(--text)}
+    .ai-message.user{align-self:flex-end;background:#3867d6;color:#fff;border-bottom-right-radius:5px}
+    .ai-message.error{background:rgba(212,93,101,.12);color:var(--danger)}
+    .ai-typing{display:none;align-self:flex-start;padding:10px 13px;border-radius:14px;background:var(--surface-2);color:var(--muted);font-size:12px}
+    .ai-typing.show{display:block}
+    .ai-suggestions{display:none;gap:7px;flex-wrap:wrap;padding:8px 13px 10px;background:var(--surface);border-top:1px solid var(--line)}
+    .ai-suggestions.show{display:flex}
+    .ai-suggestions-label{width:100%;color:var(--muted);font-size:10px;font-weight:800}
+    .ai-suggestions button{border:1px solid var(--line);border-radius:12px;padding:7px 10px;background:var(--surface-2);color:var(--primary);font-size:11px;font-weight:700;text-align:left}
+    .ai-suggestions button:hover{border-color:var(--primary);background:var(--accent-soft)}
+    .ai-quick{display:flex;gap:7px;overflow-x:auto;padding:0 13px 10px;scrollbar-width:thin}
+    .ai-quick button{flex:0 0 auto;border:1px solid var(--line);border-radius:99px;padding:7px 10px;background:var(--surface);color:var(--primary);font-size:11px;font-weight:700}
+    .ai-compose{display:flex;gap:8px;padding:11px;border-top:1px solid var(--line);background:var(--surface)}
+    .ai-input{flex:1;min-width:0;max-height:100px;resize:none;border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:var(--surface-2);color:var(--text);font:inherit;font-size:13px;outline:none}
+    .ai-input:focus{border-color:var(--primary)}
+    .ai-send{width:44px;flex:0 0 44px;border:0;border-radius:14px;background:var(--primary);color:#fff;font-size:18px}
+    .ai-send:disabled,.ai-input:disabled{opacity:.55;cursor:not-allowed}
+    .ai-footnote{padding:0 13px 10px;color:var(--muted);font-size:9px;text-align:center;background:var(--surface)}
+    @media(max-width:600px){.ai-launcher{right:16px;bottom:78px;width:57px;height:57px;border-radius:19px}.ai-panel{right:10px;bottom:145px;width:calc(100vw - 20px);height:min(620px,calc(100dvh - 165px));min-height:360px}}
+    @media(prefers-reduced-motion:reduce){.ai-panel.ai-open{animation:none}}
+  </style>
+  <button class="ai-launcher" id="aiLauncher" type="button" aria-label="Открыть СтрессНавигатор" aria-expanded="false" aria-controls="aiPanel" title="Открыть СтрессНавигатор">
+    <span aria-hidden="true">✦</span><i class="ai-dot" aria-hidden="true"></i>
+  </button>
+  <section class="ai-panel" id="aiPanel" aria-label="Справочник СтрессНавигатор" aria-hidden="true">
+    <div class="ai-head">
+      <div class="ai-avatar" aria-hidden="true">🧠</div>
+      <div class="ai-head-copy"><strong>СтрессНавигатор</strong><small>Бесплатные ответы о стрессе · без сервера</small></div>
+      <button class="ai-close" id="aiClose" type="button" aria-label="Закрыть чат">×</button>
+    </div>
+    <div class="ai-notice">Я СтрессНавигатор — справочник по теме стресса. Работаю прямо в браузере без платного сервера. Я не врач и не психолог. Не отправляй личные данные.</div>
+    <div class="ai-messages" id="aiMessages" aria-live="polite">
+      <div class="ai-message bot">Привет! 👋 Я бесплатный справочник по стрессу у подростков. Могу подсказать о тревоге, сне, учёбе, отношениях и способах самопомощи. Что тебя интересует?</div>
+    </div>
+    <div class="ai-typing" id="aiTyping">СтрессНавигатор печатает…</div>
+    <div class="ai-suggestions" id="aiSuggestions" aria-live="polite"></div>
+    <div class="ai-quick" id="aiQuick">
+      <button type="button">Как успокоиться перед контрольной?</button>
+      <button type="button">Почему возникает стресс?</button>
+      <button type="button">Как наладить сон?</button>
+    </div>
+    <form class="ai-compose" id="aiForm">
+      <textarea class="ai-input" id="aiInput" rows="1" maxlength="1200" placeholder="Напиши свой вопрос…" aria-label="Твой вопрос"></textarea>
+      <button class="ai-send" id="aiSend" type="submit" aria-label="Отправить сообщение">➤</button>
+    </form>
+    <div class="ai-footnote">Ответы составлены на основе справочной базы. Это не медицинская консультация.</div>
+  </section>
+  <script>
+  (() => {
+    const launcher = document.getElementById('aiLauncher');
+    const panel = document.getElementById('aiPanel');
+    const close = document.getElementById('aiClose');
+    const form = document.getElementById('aiForm');
+    const input = document.getElementById('aiInput');
+    const send = document.getElementById('aiSend');
+    const messagesEl = document.getElementById('aiMessages');
+    const typing = document.getElementById('aiTyping');
+    const quick = document.getElementById('aiQuick');
+    const suggestions = document.getElementById('aiSuggestions');
+    let busy = false;
+    let lastTopic = null;
+
+    const knowledge = [
+      { id:'stress', keys:['стресс','напряжен','нервнича','пережива','давление'], answer:'Стресс — естественная реакция организма на нагрузку, перемены или ситуацию, которая кажется сложной. Небольшое кратковременное напряжение иногда помогает собраться. Если оно долго не проходит, мешает спать, учиться или общаться, важно уменьшить нагрузку и обратиться за поддержкой.' },
+      { id:'causes', keys:['причин','почему','из-за чего','возникает','откуда'], answer:'У подростков стресс могут вызывать контрольные и экзамены, большой объём домашних заданий, конфликты, ожидания взрослых, трудности в дружбе, буллинг, перемены в семье, нехватка сна и постоянное сравнение себя с другими. Часто действует сразу несколько причин.' },
+      { id:'symptoms', keys:['признак','симптом','как понять','распознать','проявляет'], answer:'Возможные признаки стресса: раздражительность, тревожные мысли, усталость, трудности с концентрацией, нарушения сна, головная боль, напряжение мышц, изменение аппетита и желание избегать привычных дел. Один признак сам по себе не означает диагноз.' },
+      { id:'panic', keys:['паник','паническая атака','сильная тревога','накрывает','страшно'], answer:'Если резко стало страшно и тело сильно реагирует, попробуй сесть в безопасном месте. Медленно выдыхай чуть дольше, чем вдыхаешь, назови пять предметов вокруг и почувствуй опору ног. Не пытайся бороться с ощущениями силой. Если это впервые, симптомы сильные или есть боль в груди, обморок либо трудно дышать — позови взрослого и обратись за медицинской помощью.' },
+      { id:'calm', keys:['успоко','снять стресс','расслаб','нервы','сейчас тяжело'], answer:'Попробуй короткий план: 1) остановись и сделай несколько спокойных выдохов; 2) выпей воды; 3) отойди на пару минут от шума и экрана; 4) выбери одно небольшое действие, которое можешь выполнить сейчас; 5) поговори с человеком, которому доверяешь. Не обязательно решить всё сразу.' },
+      { id:'exam', keys:['контрольн','экзамен','перед уроком','ответ у доски','сдач','тест в школе'], answer:'Перед контрольной раздели подготовку на небольшие части и начни с самой понятной темы. Работай короткими отрезками с перерывами, подготовь вещи заранее и постарайся поспать. Перед началом сделай несколько медленных выдохов. Одна оценка не определяет твою ценность и способности.' },
+      { id:'sleep', keys:['сон','спать','не могу уснуть','бессон','режим дня','просыпаюсь ночью'], answer:'Для сна помогает примерно одинаковое время отхода ко сну и подъёма, спокойный ритуал перед сном, приглушённый свет и меньше телефона за 30–60 минут до отдыха. Днём полезны движение и дневной свет. Если проблемы со сном сохраняются и мешают жить, расскажи взрослому и обратись к специалисту.' },
+      { id:'fatigue', keys:['устал','нет сил','утом','выгора','ничего не хочется'], answer:'Усталость может быть связана с недосыпом, перегрузкой, переживаниями или физическим самочувствием. Попробуй восстановить сон, делать перерывы, регулярно есть и пить воду, временно сократить необязательные дела. Если усталость сильная или длительная, поговори со взрослым и врачом.' },
+      { id:'school', keys:['учёб','домашн','много задан','школ','нагрузк'], answer:'Когда учёбы слишком много, выпиши все задания, отметь сроки и выбери 1–3 приоритета на сегодня. Разбей большие задачи на шаги по 15–25 минут, делай короткие перерывы и попроси учителя или родителей помочь распределить нагрузку. Отдых — тоже необходимая часть расписания.' },
+      { id:'procrastination', keys:['прокрастин','откладываю','не могу начать','лень учиться','нет мотивац'], answer:'Чтобы начать дело, уменьши первый шаг до совсем небольшого: открыть учебник, прочитать один абзац или решить одну задачу. Поставь таймер на 10 минут и убери один отвлекающий фактор. Часто мотивация появляется уже после начала. Если мешают тревога или усталость, сначала позаботься о них.' },
+      { id:'breathing', keys:['дыхани','дышать','упражнение дых','4-7-8'], answer:'Попробуй мягкое дыхание без задержек: вдох носом примерно на 3–4 счёта, затем спокойный выдох на 4–6 счётов. Повтори 5–8 раз, не заставляя себя. Если кружится голова или становится неприятно, вернись к обычному дыханию. Можно вместо этого просто медленно выдыхать и ощущать опору ног.' },
+      { id:'grounding', keys:['заземлен','5-4-3-2-1','отвлечься от тревог','мысли не останавливаются'], answer:'Упражнение 5–4–3–2–1 помогает вернуть внимание к настоящему моменту: назови 5 предметов, которые видишь; 4 ощущения тела; 3 звука; 2 запаха; 1 вкус или приятное ощущение. Делай это без спешки. Это способ немного стабилизироваться, а не лечение тревоги.' },
+      { id:'friends', keys:['друз','ссор','общени','одиночеств','не с кем поговор'], answer:'В отношениях важно говорить о своих чувствах спокойно и конкретно: «Мне было неприятно, когда…». Попробуй выбрать человека, который умеет слушать, и договориться о разговоре. Если чувствуешь одиночество, можно начать с небольшого контакта — написать знакомому или присоединиться к интересному занятию.' },
+      { id:'bullying', keys:['буллинг','травл','издева','дразнят','унижа','кибербуллинг'], answer:'Травля — не твоя вина, и ты не обязан справляться с ней один. Расскажи взрослому, которому доверяешь: родителю, классному руководителю, школьному психологу. Сохраняй сообщения и доказательства, блокируй обидчиков в сети, не отвечай опасной конфронтацией. Если есть угроза безопасности, обратись за срочной помощью.' },
+      { id:'parents', keys:['родител','мама','папа','семье','дома конфликт'], answer:'Можно выбрать спокойный момент и сказать от первого лица: «Я сейчас сильно переживаю и хочу, чтобы меня выслушали». Назови конкретно, что трудно, и какую помощь ты хочешь получить. Если напрямую говорить небезопасно или не получается, обратись к другому надёжному взрослому или школьному психологу.' },
+      { id:'selfesteem', keys:['самооцен','неуверен','не нравлюсь себе','сравниваю себя','чувствую себя хуже'], answer:'Самооценка не должна зависеть только от оценок, внешности или чужого мнения. Попробуй замечать свои усилия, записывать небольшие успехи и сравнивать себя с собой в прошлом, а не с чужими публикациями. Относись к себе так, как отнёсся бы к близкому другу.' },
+      { id:'anger', keys:['злость','раздраж','гнев','срываюсь','агресс'], answer:'Когда злость нарастает, если возможно, сделай паузу и отойди от конфликта. Расслабь кисти и плечи, медленно выдохни, назови чувство словами. Позже попробуй понять, какая потребность или граница была задета, и спокойно объяснить это. Если боишься потерять контроль и причинить вред, сразу отойди и позови взрослого.' },
+      { id:'phone', keys:['телефон','соцсет','интернет','зависимость от телефона','экран'], answer:'Попробуй не запрещать себе телефон полностью, а установить понятные границы: отключить лишние уведомления, убрать телефон во время учёбы и перед сном, выделить время без экрана. Подписывайся на источники, после которых чувствуешь себя спокойно, и делай перерывы.' },
+      { id:'exercise', keys:['спорт','физическ','движен','прогул','трениров'], answer:'Умеренная физическая активность может помогать снижать напряжение и улучшать сон. Подойдут прогулка, танцы, велосипед, плавание или лёгкая разминка — выбирай то, что нравится. Не нужно тренироваться через боль или превращать движение в наказание.' },
+      { id:'food', keys:['питани','ем','аппетит','еда','не хочется есть'], answer:'Регулярное питание и вода помогают поддерживать силы, особенно в напряжённые дни. Старайся не пропускать приёмы пищи из-за учёбы и не использовать ограничения еды как способ справляться с эмоциями. Если аппетит заметно изменился или питание вызывает тревогу, поговори с доверенным взрослым и медицинским специалистом.' },
+      { id:'help', keys:['психолог','психотерапевт','помощь специалист','к кому обратиться','врач'], answer:'Обратиться за помощью стоит, если тревога или подавленность держатся долго, мешают учёбе, сну и отношениям, повторяются панические эпизоды или самостоятельно становится трудно справляться. Можно начать с родителя или другого надёжного взрослого, школьного психолога, врача или лицензированного специалиста.' },
+      { id:'motivation', keys:['мотивац','ничего не радует','апатия','потерял интерес'], answer:'Когда нет сил и мотивации, не требуй от себя сразу больших результатов. Начни с базовых вещей: сон, еда, вода, короткая прогулка и одно маленькое посильное дело. Если отсутствие интереса и радости сохраняется, обязательно расскажи взрослому и обратись за профессиональной поддержкой.' },
+      { id:'concentration', keys:['концентр','вниман','не могу сосредоточ','отвлекаюсь','память'], answer:'Для концентрации выбери одну задачу, убери уведомления и работай короткими интервалами по 15–25 минут. Записывай отвлекающие мысли, чтобы вернуться к ним позже. Перерывы, сон и вода тоже влияют на внимание. Если трудности постоянные, обсуди их со взрослым или специалистом.' },
+      { id:'weekend', keys:['отдых','выходн','свободное время','хобби','восстанов'], answer:'Отдых — не награда за выполненные дела, а необходимая потребность. Чередуй умственную нагрузку с прогулками, общением, творчеством и спокойным временем без обязанностей. Выбирай занятия, после которых чувствуешь восстановление, а не дополнительное давление.' },
+      { id:'definition_anxiety', keys:['тревог','волнение','беспокоюсь','накручиваю себя','страх будущего'], answer:'Тревога — переживание ожидания возможной опасности или трудности. Иногда она помогает подготовиться, но становится тяжёлой, если мысли постоянно возвращаются и мешают жить. Полезно отделять то, что известно точно, от предположений, и выбирать один реальный следующий шаг.' },
+      { id:'grades', keys:['оценк','двойк','плохая отметка','боюсь разочаровать','неудач'], answer:'Оценка показывает результат конкретной работы в конкретный момент, но не определяет твою ценность и весь потенциал. Посмотри, что можно улучшить, попроси объяснить ошибки и составь небольшой план подготовки. Если страх реакции взрослых очень сильный, поговори с тем, кому доверяешь.' },
+      { id:'support', keys:['поддерж','как помочь другу','друг переживает','подруга плачет','что сказать'], answer:'Сначала выслушай без осуждения и не обесценивай чувства фразами вроде «не переживай». Можно сказать: «Я рядом. Хочешь рассказать, что случилось?» Спроси, какая помощь нужна. Если друг говорит о самоповреждении, насилии или опасности, обязательно подключи надёжного взрослого — не обещай хранить это в тайне.' },
+      { id:'selfharm', keys:['самоповреж','причинить себе вред','хочу умереть','суицид','покончить с собой'], answer:'Мне очень жаль, что тебе настолько тяжело. Пожалуйста, не оставайся сейчас один/одна: прямо сейчас обратись к взрослому, которому доверяешь, и скажи, что тебе нужна помощь и ты можешь быть в опасности. Отойди от предметов и мест, которыми можно навредить себе. Если опасность непосредственная, позвони в местную экстренную службу (в Турции — 112) или попроси взрослого сделать это. Ты заслуживаешь живой и срочной поддержки.' },
+      { id:'hello', keys:['привет','здравствуй','добрый день','кто ты','что умеешь'], answer:'Привет! Я СтрессНавигатор — бесплатный справочник сайта. Могу объяснить, что такое стресс, подсказать способы самопомощи и рассказать, когда стоит обратиться за поддержкой. Спроси меня о тревоге, сне, школе, отношениях, усталости или профилактике стресса.' },
+      { id:"morning", keys:["утром","просыпаюсь","тяжело вставать","не хочу вставать"], answer:"Если утром трудно включиться в день, попробуй заранее подготовить одежду и вещи, после пробуждения открыть шторы, выпить воды и начать с простого действия. Не требуй от себя мгновенной бодрости. Если тяжело вставать почти каждый день и это сопровождается подавленностью или сильной усталостью, расскажи взрослому и обратись к врачу." },
+      { id:"night_anxiety", keys:["ночью тревожно","страшно ночью","мысли перед сном","не могу уснуть из-за мыслей"], answer:"Перед сном выпиши тревожащие мысли и рядом отметь один небольшой шаг на завтра. Затем переключись на спокойное занятие: чтение, тихую музыку или дыхание с мягким выдохом. Если мысль возвращается, напомни себе, что сейчас время отдыха, а к задаче можно вернуться утром." },
+      { id:"overthinking", keys:["слишком много думаю","постоянно прокручиваю","накручиваю","перестать думать"], answer:"Попробуй разделить мысли на факты и предположения. Спроси себя: «Что я точно знаю? Что только предполагаю? Какой маленький шаг могу сделать?» Можно выделить 10–15 минут на запись переживаний, а затем вернуться к текущему делу." },
+      { id:"fear_future", keys:["будущее","что будет дальше","боюсь будущего","не знаю кем стать"], answer:"Необязательно сейчас знать весь жизненный путь. Сосредоточься на ближайшем этапе: что интересно попробовать, какие предметы нравятся, с кем можно обсудить варианты. Решения можно менять по мере появления опыта." },
+      { id:"perfectionism", keys:["перфекционизм","идеально","боюсь ошибиться","ошибка недопустима"], answer:"Попробуй заменить цель «сделать идеально» на «сделать достаточно хорошо и улучшить при необходимости». Ошибки — часть обучения. Заранее определи, сколько времени готов потратить на задачу, и остановись, когда достигнут разумный результат." },
+      { id:"problems_many", keys:["слишком много проблем","всё навалилось","не справляюсь","не знаю с чего начать"], answer:"Когда всё кажется огромным, выпиши дела и переживания на бумагу. Раздели их на срочные, важные и те, которые могут подождать. Выбери один самый маленький шаг на ближайшие 10 минут. Попросить помощи — нормальная часть решения проблем." },
+      { id:"time_management", keys:["тайм менеджмент","планировать время","не хватает времени","расписание"], answer:"Составь реалистичный план: сначала обязательные дела и сроки, затем перерывы, сон и свободное время. Оставляй запас на непредвиденное. Не заполняй каждую минуту — перегруженное расписание само становится источником стресса." },
+      { id:"breaks", keys:["перерыв","помодоро","как отдыхать во время учёбы","устал за уроками"], answer:"После 20–30 минут сосредоточенной работы сделай короткую паузу: встань, потянись, посмотри вдаль, попей воды. После нескольких циклов устрой более длинный отдых. Подстрой интервалы под себя — это не строгие правила." },
+      { id:"presentation", keys:["выступление","публичное выступление","боюсь отвечать","страх сцены"], answer:"Подготовь план из нескольких опорных пунктов, а не учи весь текст механически. Потренируйся вслух перед одним человеком или камерой. Перед выступлением почувствуй стопы на полу и сделай спокойный выдох. Волнение не означает, что ты выступишь плохо." },
+      { id:"social_anxiety", keys:["социальная тревожность","боюсь людей","страшно знакомиться","боюсь заговорить"], answer:"Начинай с небольших и посильных контактов: поздороваться, задать короткий вопрос, написать знакомому. Не нужно сразу становиться общительным. Если страх сильно ограничивает жизнь, можно обсудить его со школьным психологом или специалистом." },
+      { id:"conflict", keys:["конфликт","поссорился","поругался","ссора"], answer:"Если эмоции сильные, сначала сделай паузу. Позже опиши ситуацию без обвинений: что произошло, что ты почувствовал и чего хотел бы дальше. Выслушай другую сторону. Если конфликт связан с угрозами или насилием, не пытайся решать его в одиночку — обратись к взрослому." },
+      { id:"breakup", keys:["расставание","меня бросили","разбитое сердце","любовь не взаимна"], answer:"После расставания нормально грустить, злиться или скучать. Дай себе время, поддерживай обычный режим, меньше проверяй страницы бывшего партнёра, общайся с друзьями и занимайся тем, что помогает восстановиться. Не торопи себя с новыми отношениями." },
+      { id:"jealousy", keys:["ревность","ревную","боюсь потерять друга","ревную парня"], answer:"Ревность часто связана со страхом потерять важные отношения или не чувствовать себя достаточно значимым. Попробуй назвать конкретный страх и спокойно обсудить границы и ожидания. Контроль, слежка и требование паролей не создают доверия." },
+      { id:"boundaries", keys:["личные границы","не умею отказывать","говорю да всем","мной пользуются"], answer:"Можно отказывать коротко и уважительно: «Нет, мне это не подходит» или «Сейчас не могу». Необязательно долго оправдываться. Если человек не уважает твой отказ, это повод обратиться за поддержкой к надёжному взрослому." },
+      { id:"criticism", keys:["критика","меня критикуют","обидные слова","замечания"], answer:"Попробуй отделить полезную часть замечания от обидной формы. Можно спросить: «Что конкретно мне стоит изменить?» Ты не обязан соглашаться с унижением. Если критика постоянная и разрушительная, обсуди это с человеком, которому доверяешь." },
+      { id:"comparison", keys:["сравнение","сравнивают с другими","хуже других","завидую"], answer:"Сравнение часто показывает только внешнюю часть чужой жизни. Попробуй замечать собственный прогресс: чему научился, что стало легче, какие качества проявил. В социальных сетях можно скрыть аккаунты, после которых чувствуешь себя хуже." },
+      { id:"body_image", keys:["внешность","не нравится тело","комплексы","толстый","худой"], answer:"Тело меняется в подростковом возрасте с разной скоростью, и сравнивать себя с отредактированными изображениями несправедливо. Сосредоточься на самочувствии, силах и заботе о здоровье, а не на наказании себя. Если мысли о внешности или еде занимают почти всё внимание, поговори с доверенным взрослым и врачом." },
+      { id:"anger_parent", keys:["злюсь на родителей","ненавижу родителей","не понимают родители"], answer:"Сильные чувства к близким могут появляться во время конфликтов. Постарайся говорить о конкретном поступке и своих чувствах, а не о личности: «Я злюсь, когда…». Если дома небезопасно, есть угрозы или насилие, обратись к надёжному взрослому вне этой ситуации." },
+      { id:"teacher", keys:["учитель","конфликт с учителем","боюсь учителя","несправедливая оценка"], answer:"Попробуй спокойно уточнить критерии оценки и попросить объяснить, что можно исправить. Если самостоятельно поговорить трудно, попроси родителя, классного руководителя или другого педагога помочь организовать разговор." },
+      { id:"exam_failure", keys:["провалил экзамен","не сдал","плохой результат","не получилось"], answer:"Неудачный результат неприятен, но он не определяет будущее. Дай себе время пережить эмоции, затем выясни, какие темы вызвали трудности и какие есть варианты пересдачи или исправления. Обсуди план с учителем или взрослым." },
+      { id:"cheating_pressure", keys:["списывать","заставляют списывать","давление одноклассников","не хочу делать как все"], answer:"Ты можешь отказаться от того, что кажется неправильным или рискованным. Подготовь нейтральную фразу: «Я не хочу в это вмешиваться». Если давление продолжается или сопровождается угрозами, расскажи взрослому." },
+      { id:"school_change", keys:["новая школа","переход в другую школу","новый класс","адаптация"], answer:"В новой школе нормально сначала чувствовать себя неуверенно. Узнай расположение кабинетов, найди одного доброжелательного человека, задай учителю практические вопросы. Дай себе время освоиться — адаптация редко происходит за один день." },
+      { id:"moving", keys:["переезд","новый город","смена места","скучаю по дому"], answer:"Переезд может одновременно вызывать интерес и грусть. Поддерживай связь с близкими, сохрани несколько привычных ритуалов и постепенно исследуй новое место. Не требуй от себя сразу полюбить перемены." },
+      { id:"family_change", keys:["развод родителей","родители разводятся","развод в семье"], answer:"Развод родителей — не твоя вина и не твоя ответственность. Ты имеешь право любить обоих родителей и испытывать разные чувства. Поговори с надёжным взрослым о том, что тебя тревожит, и попроси объяснить, какие изменения коснутся тебя." },
+      { id:"grief", keys:["смерть близкого","умер родственник","горе","потеря близкого"], answer:"После потери близкого люди переживают горе по-разному: могут плакать, злиться, чувствовать пустоту или временно ничего не чувствовать. Не нужно торопить себя. Будь рядом с теми, кому доверяешь, и обратись за помощью, если становится невыносимо тяжело." },
+      { id:"illness_family", keys:["болезнь близкого","родственник болеет","переживаю за маму","переживаю за папу"], answer:"Тревожиться за близкого естественно. Попроси взрослого объяснить ситуацию понятными словами и рассказать, что известно точно. Не бери на себя обязанности взрослых. Поддерживай себя привычным режимом и говори о своих чувствах." },
+      { id:"loneliness", keys:["одиноко","мне одиноко","нет друзей","никому не нужен"], answer:"Одиночество может ощущаться очень тяжело, но оно не означает, что с тобой что-то не так. Начни с небольшого контакта: кружок, спортивная секция, школьное мероприятие или сообщение знакомому. Если чувство безнадёжности усиливается, расскажи взрослому." },
+      { id:"friendship_end", keys:["друг перестал общаться","дружба закончилась","лучший друг игнорирует"], answer:"Попробуй один раз спокойно спросить, всё ли в порядке, и сказать, что тебе важна дружба. Если человек не хочет общаться, это больно, но нельзя заставить его. Поддерживай другие связи и дай себе время." },
+      { id:"online_harassment", keys:["оскорбляют в интернете","угрожают в сети","сливают фото","шантажируют"], answer:"Не отвечай угрозами и не отправляй дополнительные личные материалы. Сохрани доказательства, заблокируй и пожалуйся на аккаунт, настрой приватность и немедленно расскажи надёжному взрослому. При шантаже или угрозах не пытайся справляться в одиночку." },
+      { id:"privacy", keys:["личные данные","слил переписку","фото без разрешения","приватность"], answer:"Не публикуй адрес, телефон, пароли, документы и интимные изображения. Если кто-то распространяет твои данные или фото без согласия, сохрани доказательства, пожалуйся платформе и обратись к доверенному взрослому. Виноват тот, кто нарушает границы." },
+      { id:"healthy_habits", keys:["полезные привычки","профилактика стресса","как не нервничать постоянно"], answer:"Профилактика стресса складывается из регулярного сна, перерывов, движения, общения, питания и реалистичной нагрузки. Не обязательно менять всё сразу: выбери одну небольшую привычку на неделю и оцени, помогает ли она." },
+      { id:"hydration", keys:["вода","пить воду","обезвоживание","мало пью"], answer:"Поставь воду рядом и пей регулярно в течение дня, ориентируясь на жажду и самочувствие. Вода не устраняет стресс сама по себе, но поддерживает обычную работу организма. Если есть медицинские ограничения, следуй рекомендациям врача." },
+      { id:"caffeine", keys:["кофе","энергетик","энергетики","кофеин"], answer:"Кофеин и энергетики могут усиливать сердцебиение, тревожность и мешать сну, особенно если пить их вечером или много. Для подростков энергетические напитки не рекомендуются. Лучше выбрать воду или напиток без кофеина и восстановить силы сном и отдыхом." },
+      { id:"alcohol", keys:["алкоголь","напился","пить чтобы забыть","алкоголь от стресса"], answer:"Алкоголь не решает стресс и может ухудшить настроение, сон, самоконтроль и безопасность. Если кто-то предлагает выпить, можно отказаться и уйти к безопасному взрослому. Если человек уже выпил и ему плохо или он теряет сознание, срочно нужна медицинская помощь." },
+      { id:"smoking", keys:["курение","вейп","вейпинг","никотин","сигареты"], answer:"Никотин может быстро формировать зависимость и не является безопасным способом справляться с волнением. Если уже используешь никотин, не стыдись попросить взрослого или врача помочь отказаться. Для снятия напряжения безопаснее прогулка, дыхание и разговор с близким." },
+      { id:"headache", keys:["головная боль","болит голова от нервов","мигрень"], answer:"Напряжение иногда сопровождается головной болью, но причин может быть много. Сделай перерыв, выпей воды, отдохни от экрана и расскажи взрослому. При внезапной очень сильной боли, травме, нарушении зрения, слабости, спутанности или других необычных симптомах нужна срочная медицинская оценка." },
+      { id:"stomach", keys:["болит живот от волнения","тошнит от нервов","живот перед школой"], answer:"Волнение иногда влияет на пищеварение, но боль и тошнота могут иметь и другие причины. Отдохни, пей воду небольшими глотками и расскажи взрослому, особенно если симптомы повторяются. При сильной или нарастающей боли, высокой температуре, крови или обезвоживании нужна медицинская помощь." },
+      { id:"heart", keys:["сердце быстро бьётся","сердцебиение","пульс от волнения"], answer:"При волнении пульс может учащаться, но по одному симптому нельзя определить причину. Сядь, постарайся спокойно дышать и сообщи взрослому. Если есть боль в груди, обморок, выраженная одышка или состояние резко ухудшается, нужна срочная медицинская помощь." },
+      { id:"crying", keys:["хочется плакать","плачу без причины","слёзы"], answer:"Плач — нормальная реакция и иногда помогает выразить напряжение. Найди безопасное место, дай себе время и, если хочется, поговори с близким человеком. Если слёзы, подавленность или чувство безнадёжности часто повторяются, расскажи взрослому и обратись за поддержкой." },
+      { id:"sadness", keys:["грусть","мне грустно","плохое настроение","печаль"], answer:"Грусть бывает у всех и часто связана с событиями или усталостью. Попробуй не оставаться в одиночестве, сделать что-то бережное для себя и назвать, что именно расстроило. Если подавленность держится большую часть дней или мешает обычной жизни, поговори со взрослым и специалистом." },
+      { id:"depression_info", keys:["депрессия","как понять что депрессия","признаки депрессии"], answer:"Депрессия — состояние, которое может включать длительную подавленность или потерю интереса, изменения сна и аппетита, усталость, трудности с концентрацией и чувство безнадёжности. По переписке диагноз поставить нельзя. Если такое состояние сохраняется около двух недель или мешает жить, важно обратиться к врачу или специалисту вместе с доверенным взрослым." },
+      { id:"adhd_focus", keys:["сдвг","гиперактивность","трудно усидеть","не могу организоваться"], answer:"Трудности с вниманием и организацией могут возникать по разным причинам: стресс, недосып, особенности внимания и другие факторы. Помогают короткие задания, визуальный список шагов и меньше отвлечений. Если сложности устойчивые и влияют на учёбу, обсуди оценку ситуации со взрослым и врачом." },
+      { id:"autism_overload", keys:["сенсорная перегрузка","слишком громко","раздражают звуки","много людей"], answer:"При сенсорной перегрузке может помочь более тихое место, приглушённый свет, наушники или короткая пауза, если это безопасно. Заранее продумай возможность выйти из шумной ситуации. Если такие реакции часто мешают, обсуди подходящие условия поддержки со специалистом." },
+      { id:"restless", keys:["неусидчивость","не могу расслабиться","постоянно дёргаюсь"], answer:"Попробуй короткое движение: пройтись, потянуться, медленно покрутить плечами или сжать и расслабить кисти. Затем выбери одно спокойное занятие. Если внутреннее беспокойство постоянное, мешает сну и повседневной жизни, расскажи взрослому." },
+      { id:"mindfulness", keys:["осознанность","медитация","майндфулнес","практика внимания"], answer:"Простая практика осознанности: в течение минуты замечай дыхание, звуки и ощущения тела, не оценивая их. Когда внимание отвлекается, мягко возвращай его. Не всем подходит медитация; если от неё тревожнее, выбери прогулку или другое заземляющее занятие." },
+      { id:"journaling", keys:["дневник эмоций","вести дневник","записывать чувства"], answer:"В дневнике можно коротко отмечать событие, чувство, мысль и то, что помогло. Не обязательно писать красиво или каждый день. Записи помогают заметить повторяющиеся ситуации и понять, какая поддержка нужна." },
+      { id:"music", keys:["музыка помогает","слушать музыку","музыка от стресса"], answer:"Спокойная или любимая музыка может помочь переключиться и восстановить настроение. Выбирай то, что подходит именно тебе, и следи, чтобы громкость была безопасной. Музыка — один из способов поддержки, а не замена помощи, если состояние тяжёлое." },
+      { id:"nature", keys:["природа","парк","прогулка на природе","свежий воздух"], answer:"Небольшая прогулка на свежем воздухе может помочь переключить внимание и немного размяться. Не нужно ставить спортивную цель: достаточно безопасного маршрута и комфортного темпа. Если выходить одному небезопасно, попроси кого-нибудь составить компанию." },
+      { id:"hobbies", keys:["увлечения","хобби","чем заняться","скучно"], answer:"Хобби даёт возможность переключиться и почувствовать интерес вне оценок и обязанностей. Попробуй рисование, музыку, спорт, конструирование, чтение, готовку или волонтёрство. Выбирай занятие ради процесса, а не ради идеального результата." },
+      { id:"motivation_small", keys:["маленькие цели","цель на день","как ставить цели","не достигаю целей"], answer:"Ставь конкретную и выполнимую цель: не «выучить всё», а «разобрать две задачи». Отмечай прогресс и оставляй время на отдых. Если план не сработал, измени его, а не обвиняй себя." },
+      { id:"decision", keys:["не могу принять решение","выбор","боюсь выбрать неправильно"], answer:"Запиши варианты, плюсы, минусы и то, что для тебя важно. Отдели обратимые решения от тех, которые трудно изменить. Для небольшого обратимого выбора можно установить срок и выбрать достаточно хороший вариант, не пытаясь найти идеальный." },
+      { id:"asking_help", keys:["как попросить помощи","стыдно обратиться","боюсь рассказать"], answer:"Начать можно с простой фразы: «Мне сейчас непросто, можешь меня выслушать?» Если говорить трудно, напиши сообщение или покажи взрослому заметку. Выбери человека, который обычно относится к тебе внимательно и безопасно." },
+      { id:"school_counselor", keys:["школьный психолог","психолог в школе","боюсь идти к психологу"], answer:"Школьный психолог — специалист, с которым можно обсудить переживания и способы справляться с трудностями. Можно заранее записать вопросы и уточнить, как устроена конфиденциальность и в каких случаях взрослые должны подключаться ради безопасности. Если некомфортно, попроси другого доверенного взрослого помочь найти поддержку." },
+      { id:"confidentiality", keys:["секрет","конфиденциальность","можно ли рассказать психологу","не хочу чтобы узнали"], answer:"Перед разговором со специалистом можно спросить, что останется между вами и в каких ситуациях он обязан привлечь взрослых для защиты безопасности. Если есть непосредственная опасность, важно не оставаться с ней одному, даже если страшно рассказывать." },
+      { id:"panic_after", keys:["после панической атаки","боюсь повторения паники","паника снова"], answer:"После сильного приступа может оставаться усталость и страх повторения. Дай себе время восстановиться, запиши возможные обстоятельства и обсуди эпизод с доверенным взрослым и врачом, особенно если это впервые или повторяется. Не избегай всех ситуаций автоматически — план возвращения к ним лучше обсуждать со специалистом." },
+      { id:"exam_schedule", keys:["как готовиться к экзаменам","подготовка к огэ","егэ","экзаменационный стресс"], answer:"Составь календарь тем и распределяй подготовку небольшими блоками. Начинай с пробелов, чередуй предметы и регулярно решай задания в формате экзамена. Планируй сон и выходные, а не только занятия. Проси учителя объяснить непонятное заранее." },
+      { id:"cheating_anxiety", keys:["боюсь списать","страх наказания","обманул учителя"], answer:"Если сделал что-то, о чём жалеешь, подумай, как безопасно исправить ситуацию и чему она научила. Честный разговор со взрослым может быть непростым, но часто помогает найти решение. Не нужно определять себя одной ошибкой." },
+      { id:"sports_competition", keys:["соревнования","боюсь проиграть","спортивное волнение"], answer:"Перед соревнованием сосредоточься на контролируемых вещах: разминка, техника, дыхание и план действий. Ставь цель показать свои усилия, а не обязательно победить. После выступления отметь, что получилось и чему научился." },
+      { id:"stage_fright", keys:["сцена","концерт","боюсь выступать на сцене","волнение перед выступлением"], answer:"Подготовь начало выступления особенно хорошо, потренируйся в похожих условиях и найди взглядом дружелюбную точку в зале. Небольшое волнение естественно. Если ошибся, сделай паузу и продолжай — аудитория обычно не замечает мелочей так сильно, как сам выступающий." },
+      { id:"sleep_nap", keys:["дневной сон","спать днём","сонливость днём"], answer:"Если днём очень хочется спать, сначала проверь, достаточно ли ночного сна. Короткий дневной отдых может помочь, но долгий или поздний сон иногда мешает заснуть вечером. При постоянной сильной сонливости поговори со взрослым и врачом." },
+      { id:"nightmares", keys:["кошмары","страшные сны","плохие сновидения"], answer:"После кошмара напомни себе, что это был сон, включи мягкий свет и назови несколько предметов вокруг. Можно записать сон или поговорить о нём с близким. Если кошмары повторяются, связаны с травмирующим событием или мешают спать, обратись за поддержкой." },
+      { id:"schedule_change", keys:["нарушился режим","сбит режим","поздно ложусь","не могу проснуться"], answer:"Сдвигай время сна и подъёма постепенно, небольшими шагами, и получай дневной свет утром. Вечером уменьшай яркость экранов и оставляй время на спокойный ритуал. Резкие попытки лечь намного раньше часто не работают." },
+      { id:"school_burnout", keys:["выгорание от школы","ненавижу школу","не хочу учиться вообще"], answer:"Постоянное истощение может быть сигналом перегрузки. Обсуди объём заданий и ожидания с родителями или учителем, восстанови базовый режим и оставь время на занятия вне школы. Если потеря интереса и сил длится долго, обратись к специалисту." },
+      { id:"peer_pressure", keys:["давление сверстников","заставляют","боюсь отказать друзьям"], answer:"Ты имеешь право не соглашаться, даже если остальные так делают. Подготовь короткий отказ и план, как уйти из ситуации. Настоящая дружба не требует опасных поступков или нарушения твоих границ." },
+      { id:"identity", keys:["не понимаю себя","кто я","самоопределение","не знаю чего хочу"], answer:"Необязательно сразу иметь окончательные ответы о себе. Интересы и взгляды могут меняться. Пробуй разные занятия, замечай, что тебе важно, и разговаривай с людьми, рядом с которыми можно быть собой." },
+      { id:"failure_fear", keys:["страх неудачи","боюсь провалиться","боюсь начинать"], answer:"Разбей задачу на маленький пробный шаг, где ошибка не будет катастрофой. Сформулируй, чему можно научиться даже при неидеальном результате. Начало не обязывает тебя сразу выполнить всё безупречно." },
+      { id:"change_fear", keys:["боюсь перемен","страшно менять","не люблю изменения"], answer:"Перемены могут вызывать неопределённость. Узнай, что именно изменится, что останется привычным и на что ты можешь повлиять. Сохрани знакомые ритуалы и попроси близкого поддержать тебя в период адаптации." },
+      { id:"anger_calm", keys:["как контролировать эмоции","не сдерживаю эмоции","вспыльчивость"], answer:"Цель не в том, чтобы никогда не злиться или грустить, а в том, чтобы безопасно выражать чувства. Замечай ранние признаки напряжения, делай паузу, называй эмоцию и выбирай действие, которое не причинит вреда." },
+      { id:"empathy", keys:["эмпатия","понимать чувства других","сочувствие"], answer:"Эмпатия — попытка понять переживания другого человека, не обязательно соглашаясь с ним. Можно спросить: «Правильно ли я понял, что ты чувствуешь…?» И помни о своих границах: поддержка не означает брать на себя все чужие проблемы." },
+      { id:"selfcare", keys:["забота о себе","как заботиться о себе","самоподдержка"], answer:"Забота о себе — это не только приятные занятия. Это сон, еда, безопасность, отдых, движение, просьба о помощи и умение отказываться от лишней нагрузки. Выбери один небольшой способ заботы, который реально выполнить сегодня." },
+      { id:"relax_muscle", keys:["мышечное напряжение","зажаты плечи","напряжены мышцы"], answer:"Попробуй мягко опустить плечи, разжать челюсть, расслабить кисти и сделать несколько спокойных выдохов. Можно пройтись или слегка потянуться без боли. Если боль сильная или сохраняется, обратись к взрослому и врачу." },
+      { id:"study_place", keys:["рабочее место","не могу заниматься дома","шумно учиться"], answer:"Подготовь место с минимальным количеством отвлекающих предметов, держи рядом только нужные материалы и воду. Если дома шумно, обсуди возможность заниматься в библиотеке или другом безопасном спокойном месте." },
+      { id:"learning_style", keys:["как лучше учиться","запоминать информацию","память учёба"], answer:"Чередуй способы: прочитай тему, перескажи своими словами, ответь на вопросы без подсказки и повтори материал через интервалы. Короткие регулярные повторения часто полезнее ночной зубрёжки. Делай паузы и высыпайся." },
+      { id:"group_work", keys:["работа в группе","командный проект","не делают свою часть"], answer:"В начале распределите конкретные задачи, сроки и способ связи. Если кто-то не выполняет договорённость, спокойно напомни и сообщи руководителю проекта, если проблема сохраняется. Не бери молча всю работу на себя." },
+      { id:"competition", keys:["конкуренция","соревнование в классе","хочу быть лучше всех"], answer:"Соревнование может мотивировать, но постоянное сравнение утомляет. Определи собственные критерии успеха: чему научился и какой прогресс сделал. Сотрудничество и просьба о помощи не уменьшают твоих достижений." },
+      { id:"news_anxiety", keys:["новости пугают","тревога из-за новостей","страшно за мир"], answer:"Ограничь бесконечную ленту новостей и выбирай надёжные источники в определённое время. После тяжёлой информации сделай паузу, вернись к обычным делам и обсуди переживания с близким. Не нужно постоянно следить за всем, чтобы быть ответственным." },
+      { id:"climate_anxiety", keys:["экология","климатическая тревога","боюсь за планету"], answer:"Переживать за окружающую среду понятно. Полезно отделять то, на что ты можешь повлиять, от того, что не контролируешь. Выбери небольшое реальное действие или школьный проект, но не требуй от себя решить глобальную проблему в одиночку." },
+      { id:"money_stress", keys:["деньги","финансовые проблемы семьи","переживаю из-за денег"], answer:"Если финансовые трудности семьи вызывают тревогу, помни: ответственность за решение взрослых финансовых вопросов не лежит на тебе. Можно сказать близкому, что ты переживаешь, и попросить объяснить ситуацию в подходящем для возраста объёме." },
+      { id:"unsafe_home", keys:["дома страшно","насилие дома","меня бьют","угрожают дома"], answer:"Если дома тебе угрожают или причиняют вред, это не твоя вина. Постарайся оказаться рядом с безопасным взрослым: родственником, учителем, школьным психологом или сотрудником службы защиты. При непосредственной опасности звони в местную экстренную службу (в Турции — 112). Не нужно сообщать обидчику о своих планах обратиться за помощью." },
+      { id:"selfharm_friend", keys:["друг режет себя","подруга причиняет себе вред","друг хочет умереть"], answer:"Отнесись к словам и действиям друга серьёзно. Спокойно скажи, что переживаешь и хочешь помочь, и как можно скорее подключи надёжного взрослого или специалиста. Если опасность непосредственная, вызывайте экстренную помощь. Не обещай хранить это в тайне и не бери ответственность в одиночку." },
+      { id:"panic_friend", keys:["у друга паническая атака","человек паникует","как помочь при панике"], answer:"Говори спокойно и коротко, спроси, что обычно помогает, предложи перейти в более тихое безопасное место. Не окружай человека толпой и не заставляй дышать в пакет. Если это впервые, симптомы сильные или есть сомнения в безопасности, позови взрослого и медицинскую помощь." },
+      { id:"first_aid_emotion", keys:["эмоциональная поддержка","как поддержать человека","выслушать"], answer:"Слушай внимательно, не перебивай и не сравнивай его ситуацию с чужой. Спроси: «Тебе нужно, чтобы я просто послушал или помочь придумать решение?» Не обещай того, что не можешь выполнить. При угрозе жизни обязательно подключи взрослых и экстренные службы." },
+      { id:"stress_body", keys:["влияние стресса на организм","что происходит с телом","гормоны стресса"], answer:"Во время стрессовой реакции организм активирует системы, которые помогают быстро реагировать: может учащаться пульс, напрягаться мышцы и меняться внимание. При длительном напряжении могут страдать сон, настроение и самочувствие. Реакции индивидуальны, а стойкие симптомы стоит обсудить с врачом." },
+      { id:"acute_chronic", keys:["острый хронический стресс","длительный стресс","виды стресса"], answer:"Острый стресс возникает в ответ на конкретную ситуацию и обычно ослабевает после неё. Хронический стресс связан с длительной или повторяющейся нагрузкой без достаточного восстановления. Если напряжение не проходит, важно искать поддержку и менять условия, а не просто терпеть." },
+      { id:"eustress", keys:["полезный стресс","положительный стресс","мобилизует"], answer:"Умеренное кратковременное волнение иногда помогает сосредоточиться и подготовиться к важному событию. Но полезность зависит от интенсивности, длительности и возможности восстановиться. Если нагрузка становится чрезмерной, она перестаёт помогать." },
+      { id:"stress_vs_anxiety", keys:["разница стресса и тревоги","стресс или тревога","чем отличается тревога"], answer:"Стресс обычно связан с конкретной нагрузкой или ситуацией, а тревога — с ожиданием возможной угрозы, иногда даже без ясной причины. Они могут сочетаться. По ощущениям нельзя самостоятельно поставить диагноз, но можно заметить, что именно запускает переживания." },
+      { id:"stress_scale", keys:["уровень стресса","насколько сильный стресс","оценить стресс"], answer:"Оцени напряжение условно от 0 до 10 и отметь, как оно влияет на сон, учёбу, отношения и самочувствие. Это не медицинский тест, а способ заметить изменения. Если напряжение высокое или долго мешает повседневной жизни, поговори со взрослым или специалистом." },
+      { id:"week_plan", keys:["план на неделю","как восстановиться за неделю","план против стресса"], answer:"Выбери на неделю три реалистичные опоры: более регулярный сон, короткая прогулка или движение и один разговор с человеком, которому доверяешь. Добавь небольшие перерывы в учёбу. В конце недели оцени, что помогло, и скорректируй план." },
+      { id:"when_help_now", keys:["срочно нужна помощь","мне опасно","я в опасности","могу навредить"], answer:"Если прямо сейчас есть риск, что ты навредишь себе или кто-то причинит вред тебе, перейди в безопасное место и немедленно позови надёжного взрослого. При непосредственной угрозе звони в местную экстренную службу (в Турции — 112). Не оставайся один/одна." },
+      { id:"offtopic", keys:["математика","история","география","программирование","рецепт","погода"], answer:"Я настроен как тематический справочник по стрессу и подростковому самочувствию, поэтому не могу надёжно отвечать на вопросы из других областей. Могу помочь связать твой вопрос с волнением, учёбой, мотивацией или общением." }
+    ];
+
+    function normalize(value) {
+      return value.toLowerCase().replace(/ё/g, 'е').replace(/[^а-яa-z0-9\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+    const topicLabels = {
+      stress:'Что такое стресс?', causes:'Причины стресса', symptoms:'Признаки стресса',
+      panic:'Паника и сильная тревога', calm:'Как успокоиться?', sleep:'Проблемы со сном',
+      fatigue:'Усталость и отсутствие сил', exam:'Учёба и контрольные', exam:'Страх экзаменов',
+      friends:'Проблемы с друзьями', bullying:'Буллинг и травля', family_change:'Конфликты в семье',
+      selfesteem:'Самооценка', motivation:'Нет мотивации', loneliness:'Одиночество',
+      anger_calm:'Как справляться со злостью', selfcare:'Забота о себе',
+      relax_muscle:'Мышечное напряжение', news_anxiety:'Тревога из-за новостей',
+      stress_body:'Как стресс влияет на организм', acute_chronic:'Виды стресса',
+      stress_vs_anxiety:'Стресс или тревога?', week_plan:'План восстановления',
+      when_help_now:'Мне срочно нужна помощь'
+    };
+    const topicPrompts = {
+      stress:'Расскажи, что такое стресс', causes:'Почему возникает стресс',
+      symptoms:'Какие бывают признаки стресса', panic:'Что делать при панике',
+      calm:'Как мне успокоиться', sleep:'Что делать, если не могу уснуть',
+      fatigue:'Почему у меня нет сил', exam:'Я переживаю из-за учёбы',
+      exam:'Боюсь контрольной или экзамена', friends:'У меня проблемы с друзьями',
+      bullying:'Меня травят или обижают', family_change:'У меня конфликты в семье',
+      selfesteem:'У меня низкая самооценка', motivation:'У меня нет мотивации',
+      loneliness:'Мне одиноко', anger_calm:'Как справляться со злостью',
+      selfcare:'Как заботиться о себе', relax_muscle:'У меня напряжены мышцы',
+      news_anxiety:'Меня тревожат новости', stress_body:'Как стресс влияет на организм',
+      acute_chronic:'Какие бывают виды стресса', stress_vs_anxiety:'Чем стресс отличается от тревоги',
+      week_plan:'Составь план восстановления', when_help_now:'Мне срочно нужна помощь'
+    };
+    function editDistance(a, b) {
+      const row = Array.from({length:b.length + 1}, (_, i) => i);
+      for (let i = 1; i <= a.length; i++) {
+        let prev = row[0]; row[0] = i;
+        for (let j = 1; j <= b.length; j++) {
+          const old = row[j];
+          row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+          prev = old;
+        }
+      }
+      return row[b.length];
+    }
+    function getSuggestions(value) {
+      const q = normalize(value);
+      if (q.length < 2) return [];
+      const words = q.split(' ').filter(w => w.length >= 4 && !['меня','мне','есть','это','как','что','если','очень','просто','почему'].includes(w));
+      if (!words.length) return [];
+      const ranked = [];
+      for (const item of knowledge) {
+        if (item.id === 'offtopic' || !topicLabels[item.id]) continue;
+        let score = 0;
+        for (const key of item.keys) {
+          const k = normalize(key);
+          if (!k) continue;
+          if (q.includes(k) || k.includes(q)) score = Math.max(score, 5 + Math.min(k.length, 12) / 12);
+          for (const kw of k.split(' ').filter(w => w.length >= 4)) {
+            for (const word of words) {
+              if (kw === word) score = Math.max(score, 5);
+              else if (kw.startsWith(word) || word.startsWith(kw)) score = Math.max(score, 3.8);
+              else if (Math.min(kw.length, word.length) >= 5 && editDistance(kw, word) <= (Math.max(kw.length, word.length) >= 8 ? 2 : 1)) score = Math.max(score, 3.2);
+            }
+          }
+        }
+        if (score > 0) ranked.push({id:item.id,score,label:topicLabels[item.id]});
+      }
+      return ranked.sort((a,b) => b.score-a.score).slice(0,4);
+    }
+    function renderSuggestions() {
+      const found = getSuggestions(input.value);
+      suggestions.replaceChildren();
+      if (!found.length || busy) {
+        suggestions.classList.remove('show');
+        return;
+      }
+      const label = document.createElement('span');
+      label.className = 'ai-suggestions-label';
+      label.textContent = 'Возможно, ты ищешь:';
+      suggestions.appendChild(label);
+      found.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item.label;
+        button.addEventListener('click', () => ask(topicPrompts[item.id] || item.label));
+        suggestions.appendChild(button);
+      });
+      suggestions.classList.add('show');
+    }
+
+    function findAnswer(question) {
+      const q = normalize(question);
+      if (/хочу умереть|покончить с собой|причинить себе вред|навредить себе|суицид|самоповреж/i.test(q)) return knowledge.find(x => x.id === 'selfharm').answer;
+      if (/меня бьют|насилие дома|угрожают дома|я в опасности|срочно нужна помощь/i.test(q)) return knowledge.find(x => x.id === 'unsafe_home' || x.id === 'when_help_now').answer;
+      if (!q) return null;
+      let best = null;
+      let bestScore = 0;
+      for (const item of knowledge) {
+        let score = 0;
+        for (const key of item.keys) {
+          const k = normalize(key);
+          if (q.includes(k)) score += k.includes(' ') ? 7 : 3;
+          else if (k.length >= 5 && q.split(' ').some(word => word.length >= 5 && (word.startsWith(k.slice(0, 5)) || k.startsWith(word.slice(0, 5))))) score += 1;
+        }
+        if (score > bestScore) { best = item; bestScore = score; }
+      }
+      if (best && bestScore >= 3) {
+        lastTopic = best.id;
+        return best.answer;
+      }
+      if (lastTopic && /^(а если|а как|а что|почему|и если|еще|ещё|подробнее|что делать дальше)/i.test(q)) {
+        const related = knowledge.find(x => x.id === lastTopic);
+        if (related) return related.answer + '\n\nМожешь уточнить, что именно в этой ситуации происходит — тогда я подберу более подходящий совет.';
+      }
+      return 'Я пока не нашёл точный ответ в своей справочной базе. Я работаю без платного ИИ и интернета, поэтому не могу самостоятельно знать всё на свете.\n\nПопробуй уточнить вопрос или спросить о стрессе, тревоге, панике, контрольных, сне, усталости, самооценке, конфликтах, буллинге или способах успокоиться. Если вопрос не о стрессе, я честно скажу, что это вне моей темы.';
+    }
+
+    function setOpen(open) {
+      panel.classList.toggle('ai-open', open);
+      panel.setAttribute('aria-hidden', String(!open));
+      launcher.setAttribute('aria-expanded', String(open));
+      if (open) input.focus();
+    }
+    launcher.addEventListener('click', () => setOpen(!panel.classList.contains('ai-open')));
+    close.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('ai-open')) setOpen(false); });
+
+    function addMessage(text, role, extraClass='') {
+      const node = document.createElement('div');
+      node.className = ('ai-message ' + role + ' ' + extraClass).trim();
+      node.textContent = text;
+      messagesEl.appendChild(node);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+    function setBusy(value) {
+      busy = value;
+      send.disabled = value;
+      input.disabled = value;
+      typing.classList.toggle('show', value);
+    }
+    function ask(text) {
+      const clean = text.trim();
+      if (!clean || busy) return;
+      addMessage(clean, 'user');
+      input.value = '';
+      quick.style.display = 'none';
+      suggestions.classList.remove('show');
+      setBusy(true);
+      window.setTimeout(() => {
+        addMessage(findAnswer(clean), 'bot');
+        setBusy(false);
+        input.focus();
+      }, 220);
+    }
+    input.addEventListener('input', renderSuggestions);
+    form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+    });
+    quick.querySelectorAll('button').forEach(button => button.addEventListener('click', () => ask(button.textContent)));
+  })();
+  </script>
+
+</body>
+</html>
