@@ -699,7 +699,7 @@
     </div>
     <div class="ai-notice">Я СтрессНавигатор — справочник по теме стресса. Работаю прямо в браузере без платного сервера. Я не врач и не психолог. Не отправляй личные данные.</div>
     <div class="ai-messages" id="aiMessages" aria-live="polite">
-      <div class="ai-message bot">Привет! 👋 Я бесплатный справочник по стрессу у подростков. Выбери подходящую тему из кнопок ниже — я подберу ответ и предложу следующие варианты.</div>
+      <div class="ai-message bot">Привет! 👋 Я рядом, чтобы помочь тебе разобраться. Не нужно искать точную формулировку — выбери, что тебе сейчас нужно, и мы пойдём шаг за шагом.</div>
     </div>
     <div class="ai-typing" id="aiTyping">СтрессНавигатор печатает…</div>
     <div class="ai-quick ai-choice-list" id="aiQuick" aria-live="polite"></div>
@@ -981,7 +981,18 @@
       stress_vs_anxiety:['stress','panic','symptoms'],
       when_help_now:['selfharm','unsafe_home','first_aid_emotion']
     };
-    function showChoices(ids, heading='Выбери, что тебя интересует') {
+    const topicGroups = [
+      {title:'Тревога и сильные эмоции',ids:['panic','calm','symptoms','overthinking','fear_future','night_anxiety','social_anxiety','anger','sadness','crying','first_aid_emotion','relax_muscle','grounding','breathing']},
+      {title:'Учёба и нагрузка',ids:['exam','grades','exam_failure','exam_schedule','presentation','school','school_burnout','procrastination','concentration','time_management','breaks','study_place','motivation','motivation_small']},
+      {title:'Сон, усталость и здоровье',ids:['sleep','fatigue','sleep_nap','nightmares','headache','stomach','heart','healthy_habits','hydration','caffeine','exercise','stress_body']},
+      {title:'Друзья, семья и общение',ids:['friends','parents','bullying','online_harassment','conflict','friendship_end','breakup','loneliness','peer_pressure','teacher','boundaries','support']},
+      {title:'Самооценка и личные переживания',ids:['selfesteem','comparison','body_image','perfectionism','failure_fear','identity','change_fear','decision','problems_many']},
+      {title:'Понять стресс и получить поддержку',ids:['stress','causes','stress_vs_anxiety','definition_anxiety','acute_chronic','eustress','stress_scale','selfcare','week_plan','asking_help','school_counselor','when_help_now']}
+    ];
+    function labelFor(id) {
+      return topicLabels[id] || topicPrompts[id] || (id === 'selfharm' ? 'Мысли о причинении себе вреда' : id === 'unsafe_home' ? 'Если дома небезопасно' : 'Другой вопрос');
+    }
+    function showChoices(ids, heading='Выбери подходящий вариант', backAction=showMainMenu) {
       quick.replaceChildren();
       const title = document.createElement('div');
       title.className = 'ai-choice-heading';
@@ -989,41 +1000,82 @@
       quick.appendChild(title);
       ids.forEach(id => {
         const item = knowledge.find(entry => entry.id === id);
-        const label = topicLabels[id] || topicPrompts[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : id.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase()));
-        if (!item || !label) return;
+        if (!item) return;
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = label;
+        button.textContent = labelFor(id);
         button.addEventListener('click', () => chooseTopic(id));
         quick.appendChild(button);
       });
-      if (heading !== 'Выбери, что тебя интересует') {
-        const menu = document.createElement('button');
-        menu.type = 'button';
-        menu.className = 'ai-menu-button';
-        menu.textContent = '← Все темы';
-        menu.addEventListener('click', showMainMenu);
-        quick.appendChild(menu);
-      }
+      const menu = document.createElement('button');
+      menu.type = 'button';
+      menu.className = 'ai-menu-button';
+      menu.textContent = '← В начало';
+      menu.addEventListener('click', backAction);
+      quick.appendChild(menu);
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
     function showMainMenu() {
-      const allTopics = knowledge.map(item => item.id);
-      showChoices(allTopics, 'Выбери, что тебя интересует');
+      quick.replaceChildren();
+      const title = document.createElement('div');
+      title.className = 'ai-choice-heading';
+      title.textContent = 'С чего начнём?';
+      quick.appendChild(title);
+      const options = [
+        {label:'💛 Помоги разобраться',desc:'Я не знаю, что со мной происходит',action:showGuidedStart},
+        {label:'⚡ Мне нужна помощь прямо сейчас',desc:'Хочу быстро немного успокоиться',action:showImmediateHelp},
+        {label:'📚 Найти тему самому',desc:'Открыть темы по понятным разделам',action:showTopicGroups}
+      ];
+      options.forEach(option => {
+        const button=document.createElement('button');
+        button.type='button';
+        button.textContent=option.label+' — '+option.desc;
+        button.addEventListener('click',option.action);
+        quick.appendChild(button);
+      });
+      messagesEl.scrollTop=messagesEl.scrollHeight;
+    }
+    function showGuidedStart() {
+      addMessage('Помоги разобраться','user');
+      addMessage('Давай спокойно разберёмся. Что сейчас ближе всего к твоему состоянию? Здесь нет неправильных ответов.','bot');
+      showChoices(['panic','sadness','fatigue','problems_many','friends','school','stress','when_help_now'],'Что ты сейчас чувствуешь?',showMainMenu);
+    }
+    function showImmediateHelp() {
+      addMessage('Мне нужна помощь прямо сейчас','user');
+      addMessage('Хорошо, начнём с самого важного. Что происходит прямо сейчас?','bot');
+      showChoices(['panic','calm','anger_calm','first_aid_emotion','when_help_now'],'Выбери, что больше подходит',showMainMenu);
+    }
+    function showTopicGroups() {
+      quick.replaceChildren();
+      const title=document.createElement('div');
+      title.className='ai-choice-heading';
+      title.textContent='Выбери раздел — внутри будут конкретные темы';
+      quick.appendChild(title);
+      topicGroups.forEach((group,index)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.textContent=group.title;
+        button.addEventListener('click',()=>{
+          addMessage(group.title,'user');
+          showChoices(group.ids,group.title,showTopicGroups);
+        });
+        quick.appendChild(button);
+      });
+      const back=document.createElement('button');
+      back.type='button';back.className='ai-menu-button';back.textContent='← В начало';back.addEventListener('click',showMainMenu);quick.appendChild(back);
     }
     function chooseTopic(id) {
       if (busy) return;
       const item = knowledge.find(entry => entry.id === id);
       if (!item) return;
-      const label = topicLabels[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : id);
-      addMessage(label, 'user');
+      addMessage(labelFor(id), 'user');
       lastTopic = id;
       setBusy(true);
       window.setTimeout(() => {
         addMessage(item.answer, 'bot');
         setBusy(false);
-        const next = (relatedTopics[id] || ['stress','calm','sleep','selfcare']).filter((value, index, arr) => arr.indexOf(value) === index);
-        showChoices(next, 'Что ещё хочешь узнать?');
+        const next = (relatedTopics[id] || ['calm','selfcare','asking_help','when_help_now']).filter((value,index,arr)=>arr.indexOf(value)===index);
+        showChoices(next,'Что могло бы помочь дальше?',showMainMenu);
       }, 220);
     }
 
