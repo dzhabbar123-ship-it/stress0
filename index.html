@@ -674,6 +674,11 @@
     .ai-message.error{background:rgba(212,93,101,.12);color:var(--danger)}
     .ai-typing{display:none;align-self:flex-start;padding:10px 13px;border-radius:14px;background:var(--surface-2);color:var(--muted);font-size:12px}
     .ai-typing.show{display:block}
+    .ai-suggestions{display:none;gap:7px;flex-wrap:wrap;padding:8px 13px 10px;background:var(--surface);border-top:1px solid var(--line)}
+    .ai-suggestions.show{display:flex}
+    .ai-suggestions-label{width:100%;color:var(--muted);font-size:10px;font-weight:800}
+    .ai-suggestions button{border:1px solid var(--line);border-radius:12px;padding:7px 10px;background:var(--surface-2);color:var(--primary);font-size:11px;font-weight:700;text-align:left}
+    .ai-suggestions button:hover{border-color:var(--primary);background:var(--accent-soft)}
     .ai-quick{display:flex;gap:7px;overflow-x:auto;padding:0 13px 10px;scrollbar-width:thin}
     .ai-quick button{flex:0 0 auto;border:1px solid var(--line);border-radius:99px;padding:7px 10px;background:var(--surface);color:var(--primary);font-size:11px;font-weight:700}
     .ai-compose{display:flex;gap:8px;padding:11px;border-top:1px solid var(--line);background:var(--surface)}
@@ -699,6 +704,7 @@
       <div class="ai-message bot">Привет! 👋 Я бесплатный справочник по стрессу у подростков. Могу подсказать о тревоге, сне, учёбе, отношениях и способах самопомощи. Что тебя интересует?</div>
     </div>
     <div class="ai-typing" id="aiTyping">СтрессНавигатор печатает…</div>
+    <div class="ai-suggestions" id="aiSuggestions" aria-live="polite"></div>
     <div class="ai-quick" id="aiQuick">
       <button type="button">Как успокоиться перед контрольной?</button>
       <button type="button">Почему возникает стресс?</button>
@@ -721,6 +727,7 @@
     const messagesEl = document.getElementById('aiMessages');
     const typing = document.getElementById('aiTyping');
     const quick = document.getElementById('aiQuick');
+    const suggestions = document.getElementById('aiSuggestions');
     let busy = false;
     let lastTopic = null;
 
@@ -849,6 +856,90 @@
     function normalize(value) {
       return value.toLowerCase().replace(/ё/g, 'е').replace(/[^а-яa-z0-9\s-]/g, ' ').replace(/\s+/g, ' ').trim();
     }
+    const topicLabels = {
+      stress:'Что такое стресс?', causes:'Причины стресса', symptoms:'Признаки стресса',
+      panic:'Паника и сильная тревога', calm:'Как успокоиться?', sleep:'Проблемы со сном',
+      fatigue:'Усталость и отсутствие сил', study:'Учёба и контрольные', exams:'Страх экзаменов',
+      friends:'Проблемы с друзьями', bullying:'Буллинг и травля', family:'Конфликты в семье',
+      selfesteem:'Самооценка', motivation:'Нет мотивации', loneliness:'Одиночество',
+      anger_calm:'Как справляться со злостью', selfcare:'Забота о себе',
+      relax_muscle:'Мышечное напряжение', news_anxiety:'Тревога из-за новостей',
+      stress_body:'Как стресс влияет на организм', acute_chronic:'Виды стресса',
+      stress_vs_anxiety:'Стресс или тревога?', week_plan:'План восстановления',
+      when_help_now:'Мне срочно нужна помощь'
+    };
+    const topicPrompts = {
+      stress:'Расскажи, что такое стресс', causes:'Почему возникает стресс',
+      symptoms:'Какие бывают признаки стресса', panic:'Что делать при панике',
+      calm:'Как мне успокоиться', sleep:'Что делать, если не могу уснуть',
+      fatigue:'Почему у меня нет сил', study:'Я переживаю из-за учёбы',
+      exams:'Боюсь контрольной или экзамена', friends:'У меня проблемы с друзьями',
+      bullying:'Меня травят или обижают', family:'У меня конфликты в семье',
+      selfesteem:'У меня низкая самооценка', motivation:'У меня нет мотивации',
+      loneliness:'Мне одиноко', anger_calm:'Как справляться со злостью',
+      selfcare:'Как заботиться о себе', relax_muscle:'У меня напряжены мышцы',
+      news_anxiety:'Меня тревожат новости', stress_body:'Как стресс влияет на организм',
+      acute_chronic:'Какие бывают виды стресса', stress_vs_anxiety:'Чем стресс отличается от тревоги',
+      week_plan:'Составь план восстановления', when_help_now:'Мне срочно нужна помощь'
+    };
+    function editDistance(a, b) {
+      const row = Array.from({length:b.length + 1}, (_, i) => i);
+      for (let i = 1; i <= a.length; i++) {
+        let prev = row[0]; row[0] = i;
+        for (let j = 1; j <= b.length; j++) {
+          const old = row[j];
+          row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+          prev = old;
+        }
+      }
+      return row[b.length];
+    }
+    function getSuggestions(value) {
+      const q = normalize(value);
+      if (q.length < 2) return [];
+      const words = q.split(' ').filter(w => w.length >= 4 && !['меня','мне','есть','это','как','что','если','очень','просто','почему'].includes(w));
+      if (!words.length) return [];
+      const ranked = [];
+      for (const item of knowledge) {
+        if (item.id === 'offtopic' || !topicLabels[item.id]) continue;
+        let score = 0;
+        for (const key of item.keys) {
+          const k = normalize(key);
+          if (!k) continue;
+          if (q.includes(k) || k.includes(q)) score = Math.max(score, 5 + Math.min(k.length, 12) / 12);
+          for (const kw of k.split(' ').filter(w => w.length >= 4)) {
+            for (const word of words) {
+              if (kw === word) score = Math.max(score, 5);
+              else if (kw.startsWith(word) || word.startsWith(kw)) score = Math.max(score, 3.8);
+              else if (Math.min(kw.length, word.length) >= 5 && editDistance(kw, word) <= (Math.max(kw.length, word.length) >= 8 ? 2 : 1)) score = Math.max(score, 3.2);
+            }
+          }
+        }
+        if (score > 0) ranked.push({id:item.id,score,label:topicLabels[item.id]});
+      }
+      return ranked.sort((a,b) => b.score-a.score).slice(0,4);
+    }
+    function renderSuggestions() {
+      const found = getSuggestions(input.value);
+      suggestions.replaceChildren();
+      if (!found.length || busy) {
+        suggestions.classList.remove('show');
+        return;
+      }
+      const label = document.createElement('span');
+      label.className = 'ai-suggestions-label';
+      label.textContent = 'Возможно, ты ищешь:';
+      suggestions.appendChild(label);
+      found.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = item.label;
+        button.addEventListener('click', () => ask(topicPrompts[item.id] || item.label));
+        suggestions.appendChild(button);
+      });
+      suggestions.classList.add('show');
+    }
+
     function findAnswer(question) {
       const q = normalize(question);
       if (/хочу умереть|покончить с собой|причинить себе вред|навредить себе|суицид|самоповреж/i.test(q)) return knowledge.find(x => x.id === 'selfharm').answer;
@@ -905,6 +996,7 @@
       addMessage(clean, 'user');
       input.value = '';
       quick.style.display = 'none';
+      suggestions.classList.remove('show');
       setBusy(true);
       window.setTimeout(() => {
         addMessage(findAnswer(clean), 'bot');
@@ -912,6 +1004,7 @@
         input.focus();
       }, 220);
     }
+    input.addEventListener('input', renderSuggestions);
     form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
     input.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
