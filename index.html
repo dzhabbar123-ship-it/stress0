@@ -886,7 +886,7 @@
       quick.appendChild(title);
       ids.forEach(id => {
         const item = knowledge.find(entry => entry.id === id);
-        const label = topicLabels[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : null);
+        const label = topicLabels[id] || topicPrompts[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : id.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase()));
         if (!item || !label) return;
         const button = document.createElement('button');
         button.type = 'button';
@@ -905,7 +905,7 @@
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
     function showMainMenu() {
-      const allTopics = knowledge.map(item => item.id).filter(id => topicLabels[id] || id === 'selfharm' || id === 'unsafe_home');
+      const allTopics = knowledge.map(item => item.id);
       showChoices(allTopics, 'Выбери, что тебя интересует');
     }
     function chooseTopic(id) {
