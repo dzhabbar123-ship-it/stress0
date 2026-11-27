@@ -679,8 +679,11 @@
     .ai-suggestions-label{width:100%;color:var(--muted);font-size:10px;font-weight:800}
     .ai-suggestions button{border:1px solid var(--line);border-radius:12px;padding:7px 10px;background:var(--surface-2);color:var(--primary);font-size:11px;font-weight:700;text-align:left}
     .ai-suggestions button:hover{border-color:var(--primary);background:var(--accent-soft)}
-    .ai-quick{display:flex;gap:7px;overflow-x:auto;padding:0 13px 10px;scrollbar-width:thin}
-    .ai-quick button{flex:0 0 auto;border:1px solid var(--line);border-radius:99px;padding:7px 10px;background:var(--surface);color:var(--primary);font-size:11px;font-weight:700}
+    .ai-quick{display:grid;grid-template-columns:1fr;gap:8px;padding:10px 13px 13px;overflow-y:auto;max-height:190px}
+    .ai-quick button{width:100%;min-height:40px;border:1px solid var(--line);border-radius:13px;padding:9px 12px;background:var(--surface);color:var(--primary);font-size:12px;font-weight:800;text-align:left;white-space:normal}
+    .ai-quick button:hover{border-color:var(--primary);background:var(--accent-soft)}
+    .ai-choice-heading{color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 2px 1px}
+    .ai-quick button.ai-menu-button{background:var(--surface-2);color:var(--text);text-align:center}
     .ai-compose{display:flex;gap:8px;padding:11px;border-top:1px solid var(--line);background:var(--surface)}
     .ai-input{flex:1;min-width:0;max-height:100px;resize:none;border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:var(--surface-2);color:var(--text);font:inherit;font-size:13px;outline:none}
     .ai-input:focus{border-color:var(--primary)}
@@ -701,19 +704,10 @@
     </div>
     <div class="ai-notice">Я СтрессНавигатор — справочник по теме стресса. Работаю прямо в браузере без платного сервера. Я не врач и не психолог. Не отправляй личные данные.</div>
     <div class="ai-messages" id="aiMessages" aria-live="polite">
-      <div class="ai-message bot">Привет! 👋 Я бесплатный справочник по стрессу у подростков. Могу подсказать о тревоге, сне, учёбе, отношениях и способах самопомощи. Что тебя интересует?</div>
+      <div class="ai-message bot">Привет! 👋 Я бесплатный справочник по стрессу у подростков. Выбери подходящую тему из кнопок ниже — я подберу ответ и предложу следующие варианты.</div>
     </div>
     <div class="ai-typing" id="aiTyping">СтрессНавигатор печатает…</div>
-    <div class="ai-suggestions" id="aiSuggestions" aria-live="polite"></div>
-    <div class="ai-quick" id="aiQuick">
-      <button type="button">Как успокоиться перед контрольной?</button>
-      <button type="button">Почему возникает стресс?</button>
-      <button type="button">Как наладить сон?</button>
-    </div>
-    <form class="ai-compose" id="aiForm">
-      <textarea class="ai-input" id="aiInput" rows="1" maxlength="1200" placeholder="Напиши свой вопрос…" aria-label="Твой вопрос"></textarea>
-      <button class="ai-send" id="aiSend" type="submit" aria-label="Отправить сообщение">➤</button>
-    </form>
+    <div class="ai-quick ai-choice-list" id="aiQuick" aria-live="polite"></div>
     <div class="ai-footnote">Ответы составлены на основе справочной базы. Это не медицинская консультация.</div>
   </section>
   <script>
@@ -721,13 +715,9 @@
     const launcher = document.getElementById('aiLauncher');
     const panel = document.getElementById('aiPanel');
     const close = document.getElementById('aiClose');
-    const form = document.getElementById('aiForm');
-    const input = document.getElementById('aiInput');
-    const send = document.getElementById('aiSend');
     const messagesEl = document.getElementById('aiMessages');
     const typing = document.getElementById('aiTyping');
     const quick = document.getElementById('aiQuick');
-    const suggestions = document.getElementById('aiSuggestions');
     let busy = false;
     let lastTopic = null;
 
@@ -852,6 +842,91 @@
       { id:"when_help_now", keys:["срочно нужна помощь","мне опасно","я в опасности","могу навредить"], answer:"Если прямо сейчас есть риск, что ты навредишь себе или кто-то причинит вред тебе, перейди в безопасное место и немедленно позови надёжного взрослого. При непосредственной угрозе звони в местную экстренную службу (в Турции — 112). Не оставайся один/одна." },
       { id:"offtopic", keys:["математика","история","география","программирование","рецепт","погода"], answer:"Я настроен как тематический справочник по стрессу и подростковому самочувствию, поэтому не могу надёжно отвечать на вопросы из других областей. Могу помочь связать твой вопрос с волнением, учёбой, мотивацией или общением." }
     ];
+
+    const topicLabels = {
+      stress:'Что такое стресс?', causes:'Почему возникает стресс?', symptoms:'Как понять, что у меня стресс?',
+      panic:'У меня паника или сильная тревога', calm:'Хочу успокоиться прямо сейчас',
+      sleep:'Проблемы со сном', fatigue:'Усталость и нет сил', exam:'Учёба, контрольные и экзамены',
+      friends:'Проблемы с друзьями', bullying:'Меня обижают или травят',
+      selfesteem:'Не уверен(а) в себе', motivation:'Нет мотивации',
+      loneliness:'Чувствую одиночество', selfcare:'Как заботиться о себе',
+      stress_vs_anxiety:'Чем стресс отличается от тревоги',
+      when_help_now:'Мне нужна срочная помощь'
+    };
+    const topicPrompts = {
+      stress:'Расскажи, что такое стресс', causes:'Почему возникает стресс',
+      symptoms:'Как понять, что у меня стресс', panic:'Что делать при панике и сильной тревоге',
+      calm:'Как мне успокоиться прямо сейчас', sleep:'Что делать, если не могу уснуть',
+      fatigue:'Почему у меня нет сил', exam:'Я переживаю из-за учёбы и экзаменов',
+      friends:'У меня проблемы с друзьями', bullying:'Меня обижают или травят',
+      selfesteem:'У меня низкая самооценка', motivation:'У меня нет мотивации',
+      loneliness:'Мне одиноко', selfcare:'Как заботиться о себе',
+      stress_vs_anxiety:'Чем стресс отличается от тревоги',
+      when_help_now:'Мне срочно нужна помощь'
+    };
+    const startTopics = ['calm','exam','sleep','friends','fatigue','stress','when_help_now'];
+    const relatedTopics = {
+      stress:['causes','symptoms','stress_vs_anxiety','stress_body'],
+      causes:['stress','symptoms','exam','friends'],
+      symptoms:['stress','panic','fatigue','sleep'],
+      panic:['calm','relax_muscle','first_aid_emotion','when_help_now'],
+      calm:['panic','relax_muscle','selfcare','week_plan'],
+      sleep:['fatigue','sleep_nap','selfcare','week_plan'],
+      fatigue:['sleep','selfcare','motivation','stress'],
+      exam:['exam_failure','exam_schedule','study_place','calm'],
+      friends:['friendship_end','first_aid_emotion','selfesteem','loneliness'],
+      bullying:['first_aid_emotion','selfesteem','when_help_now'],
+      selfesteem:['failure_fear','empathy','friends','selfcare'],
+      motivation:['motivation_small','learning_style','week_plan','fatigue'],
+      loneliness:['friends','selfcare','first_aid_emotion'],
+      selfcare:['week_plan','sleep','calm','motivation'],
+      stress_vs_anxiety:['stress','panic','symptoms'],
+      when_help_now:['selfharm','unsafe_home','first_aid_emotion']
+    };
+    function showChoices(ids, heading='Выбери, что тебя интересует') {
+      quick.replaceChildren();
+      const title = document.createElement('div');
+      title.className = 'ai-choice-heading';
+      title.textContent = heading;
+      quick.appendChild(title);
+      ids.forEach(id => {
+        const item = knowledge.find(entry => entry.id === id);
+        const label = topicLabels[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : null);
+        if (!item || !label) return;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        button.addEventListener('click', () => chooseTopic(id));
+        quick.appendChild(button);
+      });
+      if (heading !== 'Выбери тему') {
+        const menu = document.createElement('button');
+        menu.type = 'button';
+        menu.className = 'ai-menu-button';
+        menu.textContent = '← Все темы';
+        menu.addEventListener('click', showMainMenu);
+        quick.appendChild(menu);
+      }
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+    function showMainMenu() {
+      showChoices(startTopics, 'Выбери, что тебя интересует');
+    }
+    function chooseTopic(id) {
+      if (busy) return;
+      const item = knowledge.find(entry => entry.id === id);
+      if (!item) return;
+      const label = topicLabels[id] || (id === 'selfharm' ? 'Есть мысли навредить себе' : id === 'unsafe_home' ? 'Дома небезопасно' : id);
+      addMessage(label, 'user');
+      lastTopic = id;
+      setBusy(true);
+      window.setTimeout(() => {
+        addMessage(item.answer, 'bot');
+        setBusy(false);
+        const next = (relatedTopics[id] || ['stress','calm','sleep','selfcare']).filter((value, index, arr) => arr.indexOf(value) === index);
+        showChoices(next, 'Что ещё хочешь узнать?');
+      }, 220);
+    }
 
     function normalize(value) {
       return value.toLowerCase().replace(/ё/g, 'е').replace(/[^а-яa-z0-9\s-]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -986,30 +1061,9 @@
     }
     function setBusy(value) {
       busy = value;
-      send.disabled = value;
-      input.disabled = value;
       typing.classList.toggle('show', value);
     }
-    function ask(text) {
-      const clean = text.trim();
-      if (!clean || busy) return;
-      addMessage(clean, 'user');
-      input.value = '';
-      quick.style.display = 'none';
-      suggestions.classList.remove('show');
-      setBusy(true);
-      window.setTimeout(() => {
-        addMessage(findAnswer(clean), 'bot');
-        setBusy(false);
-        input.focus();
-      }, 220);
-    }
-    input.addEventListener('input', renderSuggestions);
-    form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
-    });
-    quick.querySelectorAll('button').forEach(button => button.addEventListener('click', () => ask(button.textContent)));
+    showMainMenu();
   })();
   </script>
 
